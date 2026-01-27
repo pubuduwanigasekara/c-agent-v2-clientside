@@ -20,15 +20,16 @@ export default function Button({
     <button
       disabled={disabled || loading}
       className={cn(
-        "px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-50",
-        variant === "primary" && "bg-black text-white hover:bg-gray-800",
-        variant === "secondary" && "bg-gray-100 text-black hover:bg-gray-200",
-        variant === "outline" && "border border-gray-300 hover:bg-gray-100",
+        "px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-70",
+        variant === "primary" &&
+          "bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-900/20",
+        variant === "secondary" && "bg-slate-800 text-white hover:bg-slate-700",
+        variant === "outline" &&
+          "border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white",
         variant === "danger" && "bg-red-600 text-white hover:bg-red-700",
-        className
+        className,
       )}
-      {...props}
-    >
+      {...props}>
       {loading ? "Processing..." : children}
     </button>
   );

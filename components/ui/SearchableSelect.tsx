@@ -58,37 +58,37 @@ export default function SearchableSelect({
   return (
     <div className="flex flex-col gap-1.5 w-full relative" ref={containerRef}>
       {label && (
-        <label className="text-sm font-medium text-black">{label}</label>
+        <label className="text-sm font-medium text-slate-300">{label}</label>
       )}
 
       <button
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between w-full px-4 py-2.5 text-sm bg-white border border-slate-200 rounded-xl transition-all outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 ${
+        className={`flex items-center justify-between w-full px-4 py-2.5 text-sm bg-slate-900 border border-slate-700 rounded-xl transition-all outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 ${
           disabled
             ? "opacity-50 cursor-not-allowed"
-            : "cursor-pointer hover:border-slate-300"
+            : "cursor-pointer hover:border-slate-500 hover:bg-slate-800"
         }`}>
         <span
-          className={`truncate text-left flex-1 ${!selectedOption ? "text-slate-400" : "text-slate-900 font-medium"}`}>
+          className={`truncate text-left flex-1 ${!selectedOption ? "text-slate-500" : "text-slate-200 font-medium"}`}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <ChevronsUpDown className="w-4 h-4 text-slate-400 shrink-0" />
+        <ChevronsUpDown className="w-4 h-4 text-slate-500 shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute z-100 w-full mt-2 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100 top-full">
-          <div className="p-2 border-b border-slate-100 bg-slate-50/50">
+        <div className="absolute z-50 w-full mt-2 bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100 top-full shadow-black/50">
+          <div className="p-2 border-b border-slate-800 bg-slate-950/50">
             <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input
                 autoFocus
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-900 font-medium"
+                className="w-full pl-9 pr-4 py-2 text-sm bg-slate-800 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-white font-medium placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -102,18 +102,18 @@ export default function SearchableSelect({
                   onClick={() => handleSelect(opt.value)}
                   className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg transition-colors ${
                     value === opt.value
-                      ? "bg-blue-50 text-blue-700 font-bold"
-                      : "text-slate-600 hover:bg-slate-50"
+                      ? "bg-blue-900/30 text-blue-400 font-bold border border-blue-500/20"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
                   }`}>
                   <span className="truncate text-left">{opt.label}</span>
                   {value === opt.value && (
-                    <Check className="w-4 h-4 text-blue-600 shrink-0" />
+                    <Check className="w-4 h-4 text-blue-500 shrink-0" />
                   )}
                 </button>
               ))
             ) : (
               <div className="px-3 py-8 text-center">
-                <p className="text-xs font-medium text-slate-400">
+                <p className="text-xs font-medium text-slate-500">
                   No results found
                 </p>
               </div>

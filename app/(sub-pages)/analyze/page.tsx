@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import ChatSection from "@/components/pages/chat/ChatSection";
 import { Download } from "lucide-react";
+import { toast } from "sonner";
 
 // Types for the libraries we'll import dynamically
 type jsPDF = any;
@@ -57,7 +58,6 @@ export default function AnalyzePage() {
   // UI state
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
-  const [error, setError] = useState("");
   const [currentLogIndex, setCurrentLogIndex] = useState(0);
 
   // Scroll state
@@ -195,14 +195,16 @@ export default function AnalyzePage() {
 
   const handleAnalyze = async () => {
     if (!isValid) {
-      setError(
-        "Please complete all fields. Both teams need at least 11 players.",
-      );
-      return;
+      if (!isValid) {
+        toast.warning(
+          "Please complete all fields. Both teams need at least 11 players.",
+        );
+        return;
+      }
     }
 
     setLoading(true);
-    setError("");
+    setLoading(true);
     setResult(null);
 
     // Scroll to result/loading state immediately
@@ -233,114 +235,112 @@ export default function AnalyzePage() {
       setResult(res);
     } catch (err) {
       console.error(err);
-      setError("Analysis failed. Please check your connection and try again.");
+      toast.error(
+        "Analysis failed. Please check your connection and try again.",
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden font-sans select-none">
-      {/* Root Background Layer */}
-      <div className="fixed inset-0 bg-[#fafafa] -z-10" />
-
-      {/* Background decoration */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.3]">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[24px_24px]"></div>
-      </div>
-      <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-100/30 blur-[120px] rounded-full z-0 pointer-events-none"></div>
-      <div className="absolute top-[20%] -right-[10%] w-[30%] h-[30%] bg-purple-100/20 blur-[100px] rounded-full z-0 pointer-events-none"></div>
-
-      {/* Brand Watermark (Scattered Pattern) */}
-      <div
-        className="fixed inset-0 z-[-1] pointer-events-none opacity-[0.015] overflow-hidden"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ctext x='50' y='50' font-family='sans-serif' font-size='14' font-weight='bold' fill='%2364748b' transform='rotate(-25 50 50)'%3EEN2H PVT LTD%3C/text%3E%3Ctext x='250' y='250' font-family='sans-serif' font-size='14' font-weight='bold' fill='%2364748b' transform='rotate(-25 250 250)'%3EEN2H PVT LTD%3C/text%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-        }}
-      />
-
-      {/* Result Navigation Bar (Sticky below Main Navbar) */}
-      {result && (
-        <nav
-          className={`fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 py-3 transition-transform duration-300 ${
-            showNavbar ? "translate-y-0" : "-translate-y-full"
-          }`}>
-          <div className="max-w-7xl mx-auto px-6 flex items-center justify-end">
-            <div className="flex items-center gap-4 md:gap-6">
-              {[
-                { label: "Report", id: "analysis-result" },
-                { label: "Ask AI", id: "chat" },
-                { label: "New Analysis", id: "analyze-form" },
-              ].map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() =>
-                    document
-                      .getElementById(link.id)
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="text-xs font-bold text-slate-500 hover:text-blue-600 uppercase tracking-widest transition-colors">
-                  {link.label}
-                </button>
-              ))}
-              <div className="h-6 w-px bg-slate-200 mx-1 hidden md:block"></div>
-              <button
-                onClick={handleExportPDF}
-                className="flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition-all">
-                <Download className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Export PDF</span>
-              </button>
-            </div>
-          </div>
-        </nav>
-      )}
-
-      <div className="max-w-7xl mx-auto p-6 md:p-12 pt-24 md:pt-24 space-y-12 relative z-10">
-        <header className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-slate-100 pb-12">
-          <div className="space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest ">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>AI + Data + Domain Expert</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-bold uppercase tracking-widest ">
-                <Trophy className="w-3.5 h-3.5" />
-                <span>International T20 Standard</span>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-6xl font-medium tracking-tight text-slate-900 leading-tight">
-                Cricket{" "}
-                <span className="text-blue-600 font-bold ">Intelligence</span>
-              </h1>
-              <p className="text-slate-500 text-lg max-w-xl font-normal tracking-tight ">
-                Get AI and data-driven pre-match insights and strategic
-                recommendations for International T20 matches.
-              </p>
-            </div>
-          </div>
-          <div className="relative hidden md:block">
-            <div className="absolute inset-0 bg-blue-600/5 blur-3xl rounded-full scale-110"></div>
+    <div className="min-h-screen relative font-sans select-none bg-slate-950">
+      {/* Navbar - Always Fixed */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-3 transition-transform duration-300 ${
+          showNavbar ? "translate-y-0" : "-translate-y-full"
+        }`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div className="flex items-center">
             <img
-              src="https://img.pikbest.com/origin/10/07/00/23gpIkbEsTKfe.png!bw700"
-              alt="Cricket Tactics"
-              className="relative z-10 w-full h-96 object-contain drop-shadow-2xl"
+              src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
+              alt="EN2H Logo"
+              className="h-5 w-auto object-contain brightness-0 invert"
             />
           </div>
-        </header>
+          <div className="flex items-center gap-4 md:gap-6">
+            {[
+              { label: "Report", id: "analysis-result" },
+              { label: "Ask AI", id: "chat" },
+              { label: "New Analysis", id: "analyze-form" },
+            ].map((link) => (
+              <button
+                key={link.id}
+                disabled={!result}
+                onClick={() =>
+                  document
+                    .getElementById(link.id)
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                  !result
+                    ? "text-slate-600 cursor-not-allowed"
+                    : "text-slate-400 hover:text-blue-400"
+                }`}>
+                {link.label}
+              </button>
+            ))}
+            <div className="h-6 w-px bg-slate-800 mx-1 hidden md:block"></div>
+            <button
+              disabled
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50 opacity-70">
+              <Download className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Export PDF (Coming Soon)</span>
+            </button>
+          </div>
+        </div>
+      </nav>
 
+      {/* Hero Section with Background Image */}
+      <div className="relative w-full h-[600px] flex items-center justify-center lg:justify-start overflow-hidden bg-slate-950">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://ik.imagekit.io/ojcyr6b6l/_Pngtree_fireworks%20flags%20high-energy%20cricket%20stadium_16537761.jpg"
+            alt="Cricket Stadium Background"
+            className="w-full h-full object-cover opacity-60"
+          />
+          {/* Gradients for readability and smooth transition */}
+          <div className="absolute inset-0 bg-linear-to-r from-slate-950 via-slate-950/60 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-slate-950 to-transparent" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full pt-20 pb-40 flex flex-col justify-center h-full">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 backdrop-blur-md border border-slate-700/50 text-slate-300 text-[10px] font-bold uppercase tracking-widest shadow-lg">
+              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+              <span>AI + Data + Domain Expert</span>
+            </div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 max-w-4xl leading-tight drop-shadow-md">
+            Cricket <span className="text-blue-500">Intelligence</span>
+          </h1>
+
+          <p className="text-slate-300 text-lg md:text-xl max-w-xl font-medium leading-relaxed drop-shadow-sm">
+            Get AI and data-driven pre-match insights and strategic
+            recommendations for{" "}
+            <span className="text-white font-bold underline underline-offset-4 decoration-blue-500 decoration-2">
+              International T20 matches.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content Area - Overlapping Hero */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 -mt-32 pb-24 space-y-12">
         <section id="analyze-form">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Main Form Area */}
             <div className="lg:col-span-8 space-y-8">
-              <Card className="p-0 border-slate-200/60 overflow-hidden bg-white/70 backdrop-blur-md ">
+              <Card className="p-0 border-slate-800 overflow-hidden bg-slate-900/80 backdrop-blur-xl shadow-2xl rounded-2xl ring-1 ring-white/10">
                 <div className="p-8 space-y-10">
                   {/* Team Selection Section */}
                   <section className="space-y-6">
-                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                      <ShieldCheck className="w-4 h-4 text-blue-600" />
-                      <h3 className="font-bold text-sm text-slate-800 uppercase tracking-tight">
+                    <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+                      <ShieldCheck className="w-4 h-4 text-blue-500" />
+                      <h3 className="font-bold text-sm text-slate-200 uppercase tracking-tight">
                         TEAM SELECTION
                       </h3>
                     </div>
@@ -361,9 +361,9 @@ export default function AnalyzePage() {
 
                   {/* Player Detail Section */}
                   <section className="space-y-6">
-                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                      <Users className="w-4 h-4 text-blue-600" />
-                      <h3 className="font-bold text-sm text-slate-800 uppercase tracking-tight">
+                    <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+                      <Users className="w-4 h-4 text-blue-500" />
+                      <h3 className="font-bold text-sm text-slate-200 uppercase tracking-tight">
                         PICK THE PLAYERS (11+)
                       </h3>
                     </div>
@@ -383,9 +383,9 @@ export default function AnalyzePage() {
 
                   {/* Detail Section */}
                   <section className="space-y-6">
-                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                      <Activity className="w-4 h-4 text-blue-600" />
-                      <h3 className="font-bold text-sm text-slate-800 uppercase tracking-tight">
+                    <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+                      <Activity className="w-4 h-4 text-blue-500" />
+                      <h3 className="font-bold text-sm text-slate-200 uppercase tracking-tight">
                         Playing Conditions
                       </h3>
                     </div>
@@ -411,24 +411,17 @@ export default function AnalyzePage() {
                       />
                     </div>
                   </section>
-
-                  {error && (
-                    <div className="p-4 bg-red-50/50 border border-red-100 rounded-xl text-red-600 text-sm font-bold flex items-center gap-3 animate-head-shake">
-                      <Info className="w-4 h-4" />
-                      {error}
-                    </div>
-                  )}
                 </div>
 
                 {/* Action Footer */}
-                <div className="bg-slate-50/50 p-8 border-t border-slate-100">
+                <div className="bg-slate-900 p-8 border-t border-slate-800 flex flex-col items-center justify-center gap-4">
                   <AnalyzeButton
                     loading={loading}
                     onClick={handleAnalyze}
                     disabled={!isValid || loading}
                   />
-                  <p className="mt-4 text-sm text-yellow-600 bg-yellow-50 border border-yellow-300 px-3 py-2 rounded font-medium flex items-center gap-2">
-                    <Info className="w-3 h-3" />
+                  <p className="text-sm text-yellow-500 bg-yellow-950/30 border border-yellow-900/50 px-4 py-2 rounded-full font-medium inline-flex text-center items-center gap-2 shadow-sm">
+                    <Info className="w-3.5 h-3.5" />
                     For guidance only. AI may make mistakes, verify important
                     info.
                   </p>
@@ -437,8 +430,8 @@ export default function AnalyzePage() {
             </div>
 
             {/* Right Sidebar */}
-            <div className="lg:col-span-4 space-y-6">
-              <Card className="p-8 border-none bg-slate-900 text-white relative overflow-hidden group">
+            <div className="lg:col-span-4 space-y-6 pt-12 lg:pt-0">
+              <Card className="p-8 border-none bg-black text-white relative overflow-hidden group shadow-xl ring-1 ring-white/10">
                 <div className="relative z-10 space-y-6">
                   <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest border border-blue-500/30">
                     Powered by EN2H AI
@@ -470,8 +463,8 @@ export default function AnalyzePage() {
                 </div>
               </Card>
 
-              <Card className="p-8 border-slate-200 bg-white space-y-6">
-                <h4 className="font-bold text-slate-900 text-sm  tracking-tight border-b border-slate-100 pb-3">
+              <Card className="p-8 border-slate-800 bg-slate-900 space-y-6 shadow-lg">
+                <h4 className="font-bold text-white text-sm  tracking-tight border-b border-slate-800 pb-3">
                   Ready Check / Ready to start ?
                 </h4>
                 <div className="space-y-4">
@@ -505,24 +498,24 @@ export default function AnalyzePage() {
             {loading && (
               <div className="flex flex-col items-center justify-center py-24 space-y-8">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-blue-100 blur-3xl rounded-full scale-150 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full scale-150 animate-pulse"></div>
                   <div className="relative flex items-center justify-center">
-                    <Loader className="w-16 h-16 text-blue-600 animate-spin relative z-10" />
+                    <Loader className="w-16 h-16 text-blue-500 animate-spin relative z-10" />
                     <Sparkles className="w-6 h-6 text-blue-400 absolute animate-pulse" />
                   </div>
                 </div>
                 <div className="text-center space-y-4 max-w-md mx-auto">
-                  <h3 className="text-slate-900 font-black text-2xl tracking-tight uppercase">
+                  <h3 className="text-white font-black text-2xl tracking-tight uppercase">
                     Quantizing Match Data...
                   </h3>
                   <div className="h-6 overflow-hidden">
                     <p
                       key={currentLogIndex}
-                      className="text-blue-600 font-bold text-sm uppercase tracking-widest animate-in fade-in slide-in-from-bottom-2 duration-500">
+                      className="text-blue-400 font-bold text-sm uppercase tracking-widest animate-in fade-in slide-in-from-bottom-2 duration-500">
                       {REASONING_LOGS[currentLogIndex]}
                     </p>
                   </div>
-                  <p className="text-slate-400 font-medium text-xs uppercase tracking-tighter">
+                  <p className="text-slate-500 font-medium text-xs uppercase tracking-tighter">
                     Consulting high-dimensional models for accuracy
                   </p>
                 </div>
@@ -549,7 +542,7 @@ export default function AnalyzePage() {
         {result && (
           <section id="chat" className="space-y-4">
             <ChatSection />
-            <p className="text-center text-[10px] text-slate-400 font-medium flex items-center justify-center gap-2 pb-8">
+            <p className="text-center text-[10px] text-slate-500 font-medium flex items-center justify-center gap-2 pb-8">
               <Info className="w-3 h-3" />
               AI models can provide inaccurate data. Consult professional match
               officials for definitive rules.
@@ -616,7 +609,7 @@ function StatusItem({ label, checked }: { label: string; checked: boolean }) {
     <div className="flex items-center justify-between group">
       <span
         className={`text-[11px] font-bold  tracking-tight transition-colors ${
-          checked ? "text-slate-800" : "text-slate-400"
+          checked ? "text-slate-300" : "text-slate-600"
         }`}>
         {label}
       </span>
@@ -627,7 +620,7 @@ function StatusItem({ label, checked }: { label: string; checked: boolean }) {
         {checked ? (
           <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-500/10" />
         ) : (
-          <Circle className="w-4 h-4 text-slate-300" />
+          <Circle className="w-4 h-4 text-slate-600" />
         )}
       </div>
     </div>
