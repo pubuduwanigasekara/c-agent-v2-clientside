@@ -15,12 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cricket Agent | AI-Powered Cricket Intelligence & Match Analysis",
+  title:
+    "Cricket Intelligence | AI-Powered Cricket Intelligence & Match Analysis",
   description:
     "AI and data-driven T20 pre-match analysis based on historical data, players’ current form, weather conditions, and pitch reports.",
 
   openGraph: {
-    title: "Cricket Agent | AI-Powered Cricket Intelligence & Match Analysis",
+    title:
+      "Cricket Intelligence | AI-Powered Cricket Intelligence & Match Analysis",
     description:
       "AI and data-driven T20 pre-match analysis based on historical data, players’ current form, weather conditions, and pitch reports.",
     url: "https://cricket-ai-agent.en2h.tech/",
