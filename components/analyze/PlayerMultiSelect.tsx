@@ -71,16 +71,17 @@ export default function PlayerMultiSelect({
   const isInvalid = selectedPlayers.length < 11;
 
   return (
-    <div className="border border-slate-800 rounded-xl overflow-hidden bg-slate-900 shadow-xl shadow-black/20">
-      <div className="bg-slate-950/50 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
-        <p className="text-sm font-semibold  text-left tracking-tight text-slate-400">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-white/5 backdrop-blur-md ring-1 ring-white/10">
+      <div className="bg-[#11074b]/50 px-4 py-3 border-b border-white/10 flex justify-between items-center">
+        <p className="text-sm font-semibold  text-left tracking-tight text-white/60">
           {team || "Players"} Selector
         </p>
         <div className="flex items-center gap-3">
           {selectedPlayers.length > 0 && (
             <button
               onClick={clearAll}
-              className="text-[10px] font-bold text-slate-500 hover:text-red-400  tracking-tight transition-colors">
+              className="text-[10px] font-bold text-white/40 hover:text-red-400  tracking-tight transition-colors"
+            >
               Clear
             </button>
           )}
@@ -94,8 +95,9 @@ export default function PlayerMultiSelect({
               className={`${
                 isInvalid
                   ? "bg-red-500/20 text-red-500"
-                  : "bg-blue-600 text-white"
-              } border-none rounded-none text-[10px] transition-colors`}>
+                  : "bg-[#ef660f] text-white"
+              } border-none rounded-none text-[10px] transition-colors`}
+            >
               {selectedPlayers.length} Selected
             </Badge>
           </div>
@@ -105,13 +107,13 @@ export default function PlayerMultiSelect({
       <div className="p-4 space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <input
             type="text"
             placeholder="Search squad..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-white bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-blue-500/50 transition-all font-medium placeholder:text-slate-500"
+            className="w-full pl-10 pr-4 py-2 text-white bg-white/5 border-none rounded-lg text-sm focus:ring-2 focus:ring-[#ef660f]/50 transition-all font-medium placeholder:text-white/40"
           />
         </div>
 
@@ -126,18 +128,18 @@ export default function PlayerMultiSelect({
                   onClick={() => toggle(p.Full_Name)}
                   className={`w-full flex items-center justify-between p-2.5 rounded-lg text-sm transition-all group ${
                     isActive
-                      ? "bg-blue-900/20 text-blue-400 border border-blue-500/20"
-                      : "hover:bg-slate-800 text-slate-400 border border-transparent"
-                  }`}>
+                      ? "bg-[#ef660f]/20 text-white border border-[#ef660f]/40"
+                      : "hover:bg-white/5 text-white border border-transparent"
+                  }`}
+                >
                   <div className="flex items-center gap-2">
                     <span
-                      className={`font-bold truncate text-left flex-1 ${
-                        isActive ? "text-blue-400" : "text-slate-300"
-                      }`}>
+                      className={`font-bold truncate text-left flex-1 text-white`}
+                    >
                       {p.Full_Name}
                     </span>
                     {p.isManual && (
-                      <span className="text-[8px] bg-slate-800 text-slate-500 px-1 py-0.5 rounded font-black uppercase">
+                      <span className="text-[8px] bg-white/10 text-white/60 px-1 py-0.5 rounded font-black uppercase">
                         Manual
                       </span>
                     )}
@@ -147,7 +149,8 @@ export default function PlayerMultiSelect({
                       isActive
                         ? "opacity-100"
                         : "opacity-0 group-hover:opacity-30"
-                    }`}>
+                    }`}
+                  >
                     <X className="w-3.5 h-3.5" />
                   </div>
                 </button>
@@ -160,15 +163,16 @@ export default function PlayerMultiSelect({
                 setSearch("");
                 setManualName("");
               }}
-              className="w-full flex items-center gap-3 p-3 rounded-lg text-sm text-blue-400 bg-blue-900/10 hover:bg-blue-900/20 transition-all border border-blue-500/20 border-dashed">
-              <UserPlus className="w-4 h-4" />
+              className="w-full flex items-center gap-3 p-3 rounded-lg text-sm text-white bg-[#ef660f]/10 hover:bg-[#ef660f]/20 transition-all border border-[#ef660f]/20 border-dashed"
+            >
+              <UserPlus className="w-4 h-4 text-[#ef660f]" />
               <div className="text-left font-bold truncate">
                 Add "<span className="italic">{search}</span>" to squad
               </div>
             </button>
           ) : (
             <div className="py-8 text-center">
-              <p className="text-xs font-medium text-slate-600  tracking-tight">
+              <p className="text-xs font-medium text-white/40  tracking-tight">
                 Select players to continue
               </p>
             </div>
@@ -176,22 +180,23 @@ export default function PlayerMultiSelect({
         </div>
 
         {/* Manual Addition */}
-        <div className="pt-3 border-t border-slate-800">
+        <div className="pt-3 border-t border-white/10">
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <UserPlus className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+              <UserPlus className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/40" />
               <input
                 type="text"
                 placeholder="Add custom player..."
                 value={manualName}
                 onChange={(e) => setManualName(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addManualPlayer()}
-                className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 text-white rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none font-medium placeholder:text-slate-600"
+                className="w-full pl-9 pr-4 py-2 bg-[#11074b]/50 border border-white/10 text-white rounded-lg text-xs focus:ring-1 focus:ring-[#ef660f] outline-none font-medium placeholder:text-white/40"
               />
             </div>
             <button
               onClick={() => addManualPlayer()}
-              className="bg-blue-600 text-white px-4 rounded-lg hover:bg-blue-500 transition-colors flex items-center justify-center">
+              className="bg-[#ef660f] text-white px-4 rounded-lg hover:bg-[#ef660f]/80 transition-colors flex items-center justify-center"
+            >
               <Plus className="w-4 h-4" />
             </button>
           </div>
