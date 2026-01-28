@@ -276,7 +276,7 @@ export default function AnalyzePage() {
                 }
                 className={`text-xs font-bold uppercase tracking-widest transition-colors ${
                   !result
-                    ? "text-white cursor-not-allowed"
+                    ? "text-white/40 cursor-not-allowed"
                     : "text-white hover:text-[#ef660f]"
                 }`}
               >
@@ -559,7 +559,8 @@ export default function AnalyzePage() {
 
       {/* WhatsApp Fixed Button */}
       <a
-        href="https://wa.me/94767098119?text=Hi%2C%20I%20need%20help%20with%20the%20Match%20Analysis."
+        href="https://wa.me/94767098119?text=Hi%2C%20I%20would%20like%20to%20submit%20feedback%20for%20the%20Match%20Analysis.%0A%0ARating%20(1%E2%80%935)%3A%0AComments%3A
+"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 z-50 group"
@@ -569,7 +570,10 @@ export default function AnalyzePage() {
         <div className="relative bg-[#ef660f] text-white p-4 rounded-full hover:bg-[#ef660f]/80 hover:scale-110 transition-all duration-300">
           <div className="flex items-center gap-3">
             <div className="font-bold text-sm hidden group-hover:block whitespace-nowrap pl-2">
-              Chat for Support
+              Submit your Feedback <br />
+              <span className=" text-sm font-medium">
+                We realy appreciate your feedback and thank you.
+              </span>
             </div>
 
             <svg

@@ -402,10 +402,6 @@ export default function AnalysisResult({
                     (idx === 0 ? matchInfo.your_team : matchInfo.opponent_team)}
                   : {block.title}
                 </h3>
-                <Badge className="bg-white/5 text-white/60 border-none rounded-none text-[9px] font-bold">
-                  REGISTRY_PATH: TEAMS.
-                  {idx === 0 ? "YOUR_TEAM" : "OPPONENT_TEAM"}
-                </Badge>
               </div>
 
               {/* Phases */}
