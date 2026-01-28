@@ -26,6 +26,7 @@ import ChatSection from "@/components/pages/chat/ChatSection";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
 import Footer from "@/components/ui/Footer";
+import Link from "next/link";
 
 // Types for the libraries we'll import dynamically
 type jsPDF = any;
@@ -254,11 +255,13 @@ export default function AnalyzePage() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
-            <img
-              src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
-              alt="EN2H Logo"
-              className="h-5 w-auto object-contain brightness-0 invert"
-            />
+            <Link href={"https://www.en2h.tech/"}>
+              <img
+                src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
+                alt="EN2H Logo"
+                className="h-5 w-auto object-contain brightness-0 invert"
+              />
+            </Link>
           </div>
           <div className="flex items-center gap-4 md:gap-6">
             {[

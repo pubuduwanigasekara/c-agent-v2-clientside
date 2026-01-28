@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import Link from "next/link";
 
 const WhatsappIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -45,11 +46,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
         {/* Logo/Brand */}
         <div className="mb-8">
-          <img
-            src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
-            alt="EN2H Logo"
-            className="h-8 w-auto brightness-0 invert"
-          />
+          <Link href={"https://www.en2h.tech/"}>
+            <img
+              src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
+              alt="EN2H Logo"
+              className="h-8 w-auto brightness-0 invert"
+            />
+          </Link>
         </div>
 
         {/* Social Links */}
@@ -71,7 +74,7 @@ export default function Footer() {
         {/* Bottom Text */}
         <div className="w-full pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">
-            © {currentYear} EN2H PVT LTD. All rights reserved.
+            © {currentYear} EN2H Global PVT LTD. All rights reserved.
           </p>
         </div>
       </div>
