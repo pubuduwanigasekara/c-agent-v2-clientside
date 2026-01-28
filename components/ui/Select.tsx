@@ -21,23 +21,25 @@ export default function Select({
   disabled,
 }: SelectProps) {
   return (
-    <div className="flex flex-col gap-1 text-slate-400">
+    <div className="flex flex-col gap-1 text-white/40">
       {label && (
-        <label className="text-sm font-medium text-slate-300">{label}</label>
+        <label className="text-sm font-medium text-white/40">{label}</label>
       )}
       <select
         disabled={disabled}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-900 border-slate-700 text-white appearance-none">
-        <option value="" className="bg-slate-900 text-slate-400">
+        className="border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ef660f] bg-white/5 text-white appearance-none transition-all"
+      >
+        <option value="" className="bg-[#11074b] text-white/20">
           Select
         </option>
         {options.map((opt) => (
           <option
             key={opt.value}
             value={opt.value}
-            className="bg-slate-900 text-white">
+            className="bg-[#11074b] text-white"
+          >
             {opt.label}
           </option>
         ))}

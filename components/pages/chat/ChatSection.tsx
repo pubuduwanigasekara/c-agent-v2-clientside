@@ -101,11 +101,11 @@ export default function ChatSection() {
   };
 
   return (
-    <div className="flex flex-col h-[850px] max-w-7xl mx-auto bg-slate-900 border border-slate-800 rounded-none relative overflow-hidden">
+    <div className="flex flex-col h-[850px] max-w-7xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl relative overflow-hidden ring-1 ring-white/10">
       {/* Header Area */}
-      <div className="bg-slate-950 px-6 py-4 flex items-center justify-between z-10 border-b border-slate-800">
+      <div className="bg-[#11074b]/80 px-6 py-4 flex items-center justify-between z-10 border-b border-white/10 backdrop-blur-md">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
+          <div className="w-10 h-10 rounded-lg bg-[#ef660f] flex items-center justify-center text-white">
             <Bot className="w-6 h-6" />
           </div>
           <div>
@@ -113,8 +113,8 @@ export default function ChatSection() {
               Cricket AI Agent
             </h3>
             <div className="flex items-center gap-2 mt-1">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+              <p className="text-white/60 text-xs font-medium uppercase tracking-wider">
                 System Online
               </p>
             </div>
@@ -125,7 +125,8 @@ export default function ChatSection() {
       {/* Messages Container */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 bg-slate-950 custom-scrollbar">
+        className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 bg-transparent custom-scrollbar"
+      >
         {messages.map((m, i) => {
           const isUser = m.role === "user";
           return (
@@ -134,14 +135,16 @@ export default function ChatSection() {
               className={cn(
                 "flex flex-col max-w-[85%] md:max-w-[75%]",
                 isUser ? "ml-auto items-end" : "mr-auto items-start",
-              )}>
+              )}
+            >
               <div
                 className={cn(
                   "px-5 py-4 text-[15px] leading-relaxed",
                   isUser
-                    ? "bg-blue-600 text-white rounded-2xl rounded-tr-none shadow-md"
-                    : "bg-slate-800 border border-slate-700 text-slate-200 rounded-2xl rounded-tl-none shadow-sm",
-                )}>
+                    ? "bg-[#ef660f] text-white rounded-2xl rounded-tr-none"
+                    : "bg-white/5 border border-white/10 text-white/80 rounded-2xl rounded-tl-none backdrop-blur-md",
+                )}
+              >
                 <div className="prose prose-invert prose-sm max-w-none">
                   {m.role === "assistant" ? (
                     <ReactMarkdown
@@ -151,17 +154,17 @@ export default function ChatSection() {
                           <p className="mb-2 last:mb-0">{children}</p>
                         ),
                         ul: ({ children }) => (
-                          <ul className="list-disc pl-5 mb-2 space-y-1 text-slate-300">
+                          <ul className="list-disc pl-5 mb-2 space-y-1 text-white/60">
                             {children}
                           </ul>
                         ),
                         ol: ({ children }) => (
-                          <ol className="list-decimal pl-5 mb-2 space-y-1 text-slate-300">
+                          <ol className="list-decimal pl-5 mb-2 space-y-1 text-white/60">
                             {children}
                           </ol>
                         ),
                         code: ({ children }) => (
-                          <code className="bg-slate-900 text-blue-400 px-1 py-0.5 rounded text-[13px] font-mono border border-slate-700">
+                          <code className="bg-black/40 text-[#ef660f] px-1 py-0.5 rounded text-[13px] font-mono border border-white/10">
                             {children}
                           </code>
                         ),
@@ -175,11 +178,13 @@ export default function ChatSection() {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline">
+                            className="text-[#ef660f] hover:underline"
+                          >
                             {children}
                           </a>
                         ),
-                      }}>
+                      }}
+                    >
                       {m.content}
                     </ReactMarkdown>
                   ) : (
@@ -188,7 +193,7 @@ export default function ChatSection() {
                 </div>
               </div>
               <div className="flex items-center gap-2 mt-1.5 px-1">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
                   {isUser ? "You" : "Agent"} • {formatTime(m.timestamp)}
                 </span>
               </div>
@@ -198,11 +203,11 @@ export default function ChatSection() {
 
         {isLoading && (
           <div className="flex mr-auto items-start max-w-[75%] animate-pulse">
-            <div className="bg-slate-800 border border-slate-700 px-5 py-4 rounded-2xl rounded-tl-none">
+            <div className="bg-white/5 border border-white/10 px-5 py-4 rounded-2xl rounded-tl-none backdrop-blur-md">
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                <div className="w-2 h-2 bg-white/20 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-white/20 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                <div className="w-2 h-2 bg-white/20 rounded-full animate-bounce [animation-delay:-0.3s]" />
               </div>
             </div>
           </div>
@@ -210,10 +215,10 @@ export default function ChatSection() {
       </div>
 
       {/* Footer Area */}
-      <div className="border-t border-slate-800 bg-slate-900 p-4">
+      <div className="border-t border-white/10 bg-[#11074b]/50 p-4 backdrop-blur-md">
         {/* Active Input */}
         <div className="flex gap-3 items-end mb-3">
-          <div className="flex-1 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 transition-colors">
+          <div className="flex-1 bg-white/5 border border-white/10 rounded-xl overflow-hidden focus-within:ring-1 focus-within:ring-[#ef660f] focus-within:border-[#ef660f] transition-colors">
             <textarea
               rows={1}
               value={input}
@@ -225,7 +230,7 @@ export default function ChatSection() {
                 }
               }}
               placeholder="Ask a question about cricket..."
-              className="w-full bg-transparent border-none text-white placeholder:text-slate-500 py-4 px-5 text-[15px] focus:ring-0 resize-none max-h-40 min-h-[56px] focus:outline-none"
+              className="w-full bg-transparent border-none text-white placeholder:text-white/40 py-4 px-5 text-[15px] focus:ring-0 resize-none max-h-40 min-h-[56px] focus:outline-none"
             />
           </div>
           <button
@@ -234,17 +239,18 @@ export default function ChatSection() {
             className={cn(
               "h-[56px] px-6 rounded-xl font-bold flex items-center justify-center transition-all",
               input.trim() && !isLoading
-                ? "bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-900/20"
-                : "bg-slate-800 text-slate-600 cursor-not-allowed",
-            )}>
+                ? "bg-[#ef660f] text-white hover:bg-[#ef660f]/80"
+                : "bg-white/5 text-white/40 cursor-not-allowed border border-white/10",
+            )}
+          >
             <Send className="w-5 h-5" />
           </button>
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-amber-950/20 border border-amber-900/30 px-4 py-2.5 rounded-lg inline-flex items-center gap-3 w-full justify-center">
-          <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />
-          <p className="text-amber-500 text-xs font-semibold leading-none">
+        <div className="bg-[#ef660f]/10 border border-[#ef660f]/20 px-4 py-2.5 rounded-lg inline-flex items-center gap-3 w-full justify-center">
+          <AlertCircle className="w-4 h-4 text-[#ef660f] shrink-0" />
+          <p className="text-[#ef660f] text-xs font-semibold leading-none">
             Guidance only. AI responses may contain inaccuracies. Please verify
             critical information.
           </p>
@@ -259,11 +265,11 @@ export default function ChatSection() {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #334155;
+          background: rgba(255, 255, 255, 0.1);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #475569;
+          background: rgba(255, 255, 255, 0.2);
         }
       `}</style>
     </div>
