@@ -10,23 +10,23 @@ export default function MatchDateTime({
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-black">Match Date</label>
+        <label className="text-sm font-medium text-slate-300">Match Date</label>
         <input
           type="date"
           value={date}
           min={today}
           onChange={(e) => onDateChange(e.target.value)}
-          className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
+          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-medium focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all outline-none appearance-none"
         />
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-black">Match Time</label>
+        <label className="text-sm font-medium text-slate-300">Match Time</label>
         <input
           type="time"
           value={time}
           onChange={(e) => onTimeChange(e.target.value)}
-          className="w-full bg-slate-50  rounded-lg px-3 py-2 text-sm text-slate-700 font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none border border-slate-200"
+          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-medium focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all outline-none appearance-none"
         />
       </div>
     </div>
