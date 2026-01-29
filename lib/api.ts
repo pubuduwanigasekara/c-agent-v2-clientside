@@ -1,6 +1,6 @@
 import { AnalyzeRequest, ChatRequest } from "./types";
 
-const BASE_URL = process.env.BASE_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000/v1/cricket";
+const BASE_URL = process.env.BASE_URL || process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function getTeams() {
   const res = await fetch(`${BASE_URL}/teams`);
