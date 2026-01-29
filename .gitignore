@@ -22,3 +22,7 @@ pnpm-debug.log*
 # Editor files
 .vscode/
 .idea/
+
+# pnpm
+pnpm-debug.log*
+pnpm-lock.yaml.bak
