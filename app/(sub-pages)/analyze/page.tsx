@@ -288,11 +288,16 @@ export default function AnalyzePage() {
             ))}
             <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
             <button
-              disabled
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/5 text-white/30 cursor-not-allowed border border-white/10 opacity-70"
+              disabled={!result}
+              onClick={handleExportPDF}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border border-white/10 ${
+                !result
+                  ? "bg-white/5 text-white/30 cursor-not-allowed opacity-70"
+                  : "bg-white/10 text-white hover:bg-white/20 hover:text-[#ef660f] cursor-pointer"
+              }`}
             >
               <Download className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Export PDF (Coming Soon)</span>
+              <span className="hidden sm:inline">Export PDF</span>
             </button>
           </div>
         </div>
