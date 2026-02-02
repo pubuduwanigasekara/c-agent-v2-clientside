@@ -60,17 +60,34 @@ export default function AnalysisResult({
   if (!data) return null;
 
   const SectionHeader = ({ icon: Icon, title, badge }: any) => (
-    <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+    <div
+      className={cn(
+        "flex items-center justify-between border-b pb-4 mb-6",
+        printing ? "border-slate-200" : "border-white/10",
+      )}
+    >
       <div className="flex items-center gap-3">
         <div className="p-2 bg-[#ef660f] rounded-none">
           <Icon className="w-4 h-4 text-white" />
         </div>
-        <h3 className="font-black text-sm text-white uppercase tracking-widest">
+        <h3
+          className={cn(
+            "font-black text-sm uppercase tracking-widest",
+            printing ? "text-slate-900" : "text-white",
+          )}
+        >
           {title}
         </h3>
       </div>
       {badge && (
-        <Badge className="bg-white/5 text-white/40 rounded-none text-[8px] font-black uppercase border-white/10">
+        <Badge
+          className={cn(
+            "rounded-none text-[8px] font-black uppercase",
+            printing
+              ? "bg-slate-100 text-slate-500 border-slate-200"
+              : "bg-white/5 text-white/40 border-white/10",
+          )}
+        >
           {badge}
         </Badge>
       )}
@@ -80,24 +97,40 @@ export default function AnalysisResult({
   return (
     <div
       className={cn(
-        "space-y-12 pb-20 container mx-auto px-4 md:px-0",
+        "space-y-12 pb-20 container mx-auto px-6 md:px-0",
+        printing ? "bg-white text-slate-900" : "text-white",
         !printing && "animate-in fade-in slide-in-from-bottom-4 duration-1000",
       )}
     >
       {/* Header / Identity Area */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-4 border-white/10">
+      <div
+        className={cn(
+          "flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-4",
+          printing ? "border-slate-200" : "border-white/10",
+        )}
+      >
         <div className="space-y-4 flex-1">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ef660f]/10 text-[#ef660f] text-xs font-semibold tracking-tight rounded-lg border border-[#ef660f]/20">
             Match Intelligence | Pre Match Analysis
           </div>
-          <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter  leading-none">
+          <h2
+            className={cn(
+              "text-5xl md:text-6xl font-black tracking-tighter leading-none",
+              printing ? "text-slate-900" : "text-white",
+            )}
+          >
             {matchInfo.your_team || teams.your_team?.team_name || "Home"}{" "}
             <span className="text-[#ef660f] "> VS </span>{" "}
             {matchInfo.opponent_team ||
               teams.opponent_team?.team_name ||
               "Away"}
           </h2>
-          <div className="flex flex-wrap gap-4 text-[10px] font-bold text-white/60 uppercase tracking-widest">
+          <div
+            className={cn(
+              "flex flex-wrap gap-4 text-[10px] font-bold uppercase tracking-widest",
+              printing ? "text-slate-500" : "text-white/60",
+            )}
+          >
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
               {matchInfo.date || weather.date}
@@ -123,34 +156,74 @@ export default function AnalysisResult({
           <img
             src="https://ik.imagekit.io/ojcyr6b6l/EN2H%20Main%20Logo%20Black%20Edition.png?updatedAt=1765596023483"
             alt="EN2H Corporate Logo"
-            className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+            className={cn(
+              "h-10 md:h-12 w-auto object-contain",
+              printing ? "" : "brightness-0 invert",
+            )}
           />
-          <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">
+          <span
+            className={cn(
+              "text-[10px] font-black uppercase tracking-[0.2em]",
+              printing ? "text-slate-400" : "text-white/40",
+            )}
+          >
             Match Intelligence Report
           </span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="rounded-none border-2 border-white/10 bg-white/5 backdrop-blur-xl p-8 space-y-6 relative overflow-hidden group">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-8 space-y-6 relative overflow-hidden group",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "border-white/10 bg-white/5 backdrop-blur-xl",
+          )}
+        >
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#ef660f]/5 rounded-full -mr-16 -mt-16 transition-colors duration-500" />
           <div className="relative z-10 space-y-6">
-            <p className="text-xs font-black text-white/60 uppercase tracking-widest flex items-center gap-2">
+            <p
+              className={cn(
+                "text-xs font-black uppercase tracking-widest flex items-center gap-2",
+                printing ? "text-slate-500" : "text-white/60",
+              )}
+            >
               <Gauge className="w-3.5 h-3.5" />
               Win Probability
             </p>
             <div className="flex items-end justify-between gap-4">
               <div className="text-center flex-1">
-                <p className="text-[10px] font-black text-white/60 uppercase truncate">
+                <p
+                  className={cn(
+                    "text-[10px] font-black uppercase truncate",
+                    printing ? "text-slate-500" : "text-white/60",
+                  )}
+                >
                   {matchInfo.your_team || teams.your_team?.team_name}
                 </p>
-                <h4 className="text-6xl font-black text-white">
+                <h4
+                  className={cn(
+                    "text-6xl font-black",
+                    printing ? "text-slate-900" : "text-white",
+                  )}
+                >
                   {analysis.win_probability?.your_team || 0}%
                 </h4>
               </div>
-              <div className="h-16 w-px bg-white/10 mb-2" />
+              <div
+                className={cn(
+                  "h-16 w-px mb-2",
+                  printing ? "bg-slate-200" : "bg-white/10",
+                )}
+              />
               <div className="text-start flex-1">
-                <p className="text-[10px] font-black text-white/60 uppercase ">
+                <p
+                  className={cn(
+                    "text-[10px] font-black uppercase",
+                    printing ? "text-slate-500" : "text-white/60",
+                  )}
+                >
                   {matchInfo.opponent_team || teams.opponent_team?.team_name}
                 </p>
                 <h4 className="text-6xl font-black text-[#ef660f]">
@@ -158,12 +231,20 @@ export default function AnalysisResult({
                 </h4>
               </div>
             </div>
-            <div className="space-y-3 pt-6 border-t border-white/10">
+            <div
+              className={cn(
+                "space-y-3 pt-6 border-t",
+                printing ? "border-slate-200" : "border-white/10",
+              )}
+            >
               {analysis.win_probability?.key_factors?.map(
                 (f: string, i: number) => (
                   <div
                     key={i}
-                    className="flex gap-2 text-sm font-medium text-white/60  tracking-tight"
+                    className={cn(
+                      "flex gap-2 text-sm font-medium tracking-tight",
+                      printing ? "text-slate-600" : "text-white/60",
+                    )}
                   >
                     <span className="text-[#ef660f]">-</span>
                     {f}
@@ -174,8 +255,20 @@ export default function AnalysisResult({
           </div>
         </Card>
 
-        <Card className="rounded-none border-2 border-white/10 bg-[#11074b] text-white p-8 group overflow-hidden relative">
-          <div className="absolute bottom-0 right-0 p-4 opacity-5 translate-y-4 group-hover:translate-y-0 transition-transform text-white">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-8 group overflow-hidden relative",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "border-white/10 bg-[#11074b] text-white",
+          )}
+        >
+          <div
+            className={cn(
+              "absolute bottom-0 right-0 p-4 opacity-5 translate-y-4 group-hover:translate-y-0 transition-transform",
+              printing ? "text-slate-300" : "text-white",
+            )}
+          >
             <Swords className="w-20 h-20" />
           </div>
           <div className="relative z-10 space-y-4 h-full flex flex-col justify-between">
@@ -183,11 +276,21 @@ export default function AnalysisResult({
               <p className="text-[10px] font-black text-[#ef660f] uppercase tracking-widest">
                 Condition Optimized Toss
               </p>
-              <h3 className="text-4xl font-black leading-none uppercase text-white">
+              <h3
+                className={cn(
+                  "text-4xl font-black leading-none uppercase",
+                  printing ? "text-slate-900" : "text-white",
+                )}
+              >
                 {analysis.toss_recommendation?.decision?.replace("_", " ") ||
                   "No Data"}
               </h3>
-              <p className="text-xs text-white/60 leading-relaxed font-medium">
+              <p
+                className={cn(
+                  "text-xs leading-relaxed font-medium",
+                  printing ? "text-slate-600" : "text-white/60",
+                )}
+              >
                 {analysis.toss_recommendation?.reasoning}
               </p>
             </div>
@@ -199,8 +302,20 @@ export default function AnalysisResult({
           </div>
         </Card>
 
-        <Card className="rounded-none border-2 border-white/10 bg-white/5 backdrop-blur-xl p-8 space-y-6">
-          <p className="text-xs font-black text-white/60 uppercase tracking-widest flex items-center gap-2">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-8 space-y-6",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "border-white/10 bg-white/5 backdrop-blur-xl",
+          )}
+        >
+          <p
+            className={cn(
+              "text-xs font-black uppercase tracking-widest flex items-center gap-2",
+              printing ? "text-slate-500" : "text-white/60",
+            )}
+          >
             <CloudRain className="w-3.5 h-3.5" />
             Weather Analysis
           </p>
@@ -214,19 +329,34 @@ export default function AnalysisResult({
             <>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-white/60">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2",
+                      printing ? "text-slate-500" : "text-white/60",
+                    )}
+                  >
                     <Thermometer className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-black uppercase">
                       Mean Temp
                     </span>
                   </div>
-                  <p className="text-3xl font-black text-white">
+                  <p
+                    className={cn(
+                      "text-3xl font-black",
+                      printing ? "text-slate-900" : "text-white",
+                    )}
+                  >
                     {analysis.weather_analysis?.temperature ||
                       weather.avg_temp_c + "°C"}
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-white/60">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2",
+                      printing ? "text-slate-500" : "text-white/60",
+                    )}
+                  >
                     <Droplets className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-black uppercase">
                       Rain Factor
@@ -238,33 +368,65 @@ export default function AnalysisResult({
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-white/60">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2",
+                      printing ? "text-slate-500" : "text-white/60",
+                    )}
+                  >
                     <Wind className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-black uppercase">
                       Velocity
                     </span>
                   </div>
-                  <p className="text-3xl font-black text-white">
+                  <p
+                    className={cn(
+                      "text-3xl font-black",
+                      printing ? "text-slate-900" : "text-white",
+                    )}
+                  >
                     {analysis.weather_analysis?.wind_speed ||
                       weather.wind_speed}
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-white/60">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2",
+                      printing ? "text-slate-500" : "text-white/60",
+                    )}
+                  >
                     <Activity className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-black uppercase">
                       Humidity
                     </span>
                   </div>
-                  <p className="text-3xl font-black text-white">
+                  <p
+                    className={cn(
+                      "text-3xl font-black",
+                      printing ? "text-slate-900" : "text-white",
+                    )}
+                  >
                     {analysis.weather_analysis?.humidity ||
                       weather.avg_humidity + "%"}
                   </p>
                 </div>
               </div>
-              <div className="p-2 bg-white/5 border border-white/10 flex gap-3">
+              <div
+                className={cn(
+                  "p-2 border flex gap-3",
+                  printing
+                    ? "bg-slate-100 border-slate-200"
+                    : "bg-white/5 border-white/10",
+                )}
+              >
                 <Info className="w-4 h-4 text-[#ef660f] shrink-0 mt-0.5" />
-                <p className="text-sm font-medium text-white/60  ">
+                <p
+                  className={cn(
+                    "text-sm font-medium",
+                    printing ? "text-slate-600" : "text-white/60",
+                  )}
+                >
                   {analysis.weather_analysis?.summary ||
                     analysis.weather_analysis?.pitch_impact}
                 </p>
@@ -285,18 +447,42 @@ export default function AnalysisResult({
           {analysis.key_matchups?.map((m: any, i: number) => (
             <Card
               key={i}
-              className="rounded-none border-2 border-white/10 bg-white/5 backdrop-blur-xl p-6 relative group overflow-hidden hover:border-[#ef660f] transition-colors"
+              className={cn(
+                "rounded-none border-2 p-6 relative group overflow-hidden transition-colors",
+                printing
+                  ? "bg-slate-50 border-slate-200"
+                  : "border-white/10 bg-white/5 backdrop-blur-xl hover:border-[#ef660f]",
+              )}
             >
-              <div className="absolute top-0 left-0 w-1 h-full bg-white/10 group-hover:bg-[#ef660f] transition-all" />
+              <div
+                className={cn(
+                  "absolute top-0 left-0 w-1 h-full transition-all",
+                  printing
+                    ? "bg-slate-200"
+                    : "bg-white/10 group-hover:bg-[#ef660f]",
+                )}
+              />
               <div className="space-y-4">
-                <h5 className="font-black text-sm uppercase tracking-tight text-white">
+                <h5
+                  className={cn(
+                    "font-black text-sm uppercase tracking-tight",
+                    printing ? "text-slate-900" : "text-white",
+                  )}
+                >
                   {m.battle}
                 </h5>
                 <div className="flex flex-col gap-2">
-                  <Badge className="bg-[#ef660f]/10 text-[#ef660f] border-none rounded-none text-[12px] font-medium  px-2 w-fit">
+                  <Badge className="bg-[#ef660f]/10 text-[#ef660f] border-none rounded-none text-[12px] font-medium px-2 w-fit">
                     Advantage: {m.advantage}
                   </Badge>
-                  <p className="text-xs text-white/60 font-medium   border-t border-white/10 pt-2">
+                  <p
+                    className={cn(
+                      "text-xs font-medium border-t pt-2",
+                      printing
+                        ? "text-slate-600 border-slate-200"
+                        : "text-white/60 border-white/10",
+                    )}
+                  >
                     {m.reasoning}
                   </p>
                 </div>
@@ -308,7 +494,14 @@ export default function AnalysisResult({
 
       {/* DLS Scenario & Pitch Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Card className="rounded-none border-2 border-white/10 bg-[#ef660f]/5 p-8 space-y-4">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-8 space-y-4",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "border-white/10 bg-[#ef660f]/5",
+          )}
+        >
           <SectionHeader
             icon={CloudRain}
             title="DLS Impact Scenario"
@@ -319,7 +512,12 @@ export default function AnalysisResult({
               <p className="text-[9px] font-black text-[#ef660f] uppercase">
                 Impact Level
               </p>
-              <p className="text-xl font-black text-white uppercase">
+              <p
+                className={cn(
+                  "text-xl font-black uppercase",
+                  printing ? "text-slate-900" : "text-white",
+                )}
+              >
                 {analysis.weather_analysis?.dls_scenario || "MODERATE"}
               </p>
             </div>
@@ -327,17 +525,36 @@ export default function AnalysisResult({
               <p className="text-[9px] font-black text-[#ef660f] uppercase">
                 Strategic Focus
               </p>
-              <p className="text-xs font-bold text-white/60 leading-tight">
+              <p
+                className={cn(
+                  "text-xs font-bold leading-tight",
+                  printing ? "text-slate-600" : "text-white/60",
+                )}
+              >
                 Preserve Wickets / Variable Scoring Rates
               </p>
             </div>
           </div>
-          <p className="text-xs font-semibold text-white/60 leading-relaxed border-t border-white/10 pt-4">
+          <p
+            className={cn(
+              "text-xs font-semibold leading-relaxed border-t pt-4",
+              printing
+                ? "text-slate-600 border-slate-200"
+                : "text-white/60 border-white/10",
+            )}
+          >
             {analysis.weather_analysis?.dls_strategy}
           </p>
         </Card>
 
-        <Card className="rounded-none border-2 border-white/10 bg-white/5 backdrop-blur-xl p-8 space-y-4">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-8 space-y-4",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "border-white/10 bg-white/5 backdrop-blur-xl",
+          )}
+        >
           <SectionHeader
             icon={TrendingUp}
             title="Ground Diagnostic"
@@ -345,15 +562,30 @@ export default function AnalysisResult({
           />
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-1">
-              <p className="text-[9px] font-black text-white/60 uppercase">
+              <p
+                className={cn(
+                  "text-[9px] font-black uppercase",
+                  printing ? "text-slate-500" : "text-white/60",
+                )}
+              >
                 Average Score
               </p>
-              <p className="text-xl font-black text-white">
+              <p
+                className={cn(
+                  "text-xl font-black",
+                  printing ? "text-slate-900" : "text-white",
+                )}
+              >
                 {ground.avg_first_innings_score} RUNS
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-[9px] font-black text-white/60 uppercase">
+              <p
+                className={cn(
+                  "text-[9px] font-black uppercase",
+                  printing ? "text-slate-500" : "text-white/60",
+                )}
+              >
                 Pitch Surface
               </p>
               <p className="text-xl font-black text-[#ef660f] uppercase">
@@ -361,7 +593,14 @@ export default function AnalysisResult({
               </p>
             </div>
           </div>
-          <p className="text-xs font-medium text-white/60 bg-white/5 p-3 ">
+          <p
+            className={cn(
+              "text-xs font-medium p-3",
+              printing
+                ? "text-slate-600 bg-slate-100"
+                : "text-white/60 bg-white/5",
+            )}
+          >
             {analysis.ground_analysis?.pace_vs_spin || ground.note}
           </p>
         </Card>
@@ -387,11 +626,31 @@ export default function AnalysisResult({
         ].map((block, idx) => (
           <div
             key={idx}
-            className="space-y-8 p-1 bg-white/5 border border-white/10"
+            className={cn(
+              "space-y-8 p-1 border",
+              printing
+                ? "bg-slate-100 border-slate-200"
+                : "bg-white/5 border-white/10",
+            )}
           >
-            <div className="bg-[#11074b] p-8 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-white/10 pb-6">
-                <h3 className="text-2xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
+            <div
+              className={cn(
+                "p-8 space-y-10",
+                printing ? "bg-white" : "bg-[#11074b]",
+              )}
+            >
+              <div
+                className={cn(
+                  "flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 pb-6",
+                  printing ? "border-slate-100" : "border-white/10",
+                )}
+              >
+                <h3
+                  className={cn(
+                    "text-2xl font-black uppercase tracking-tighter flex items-center gap-3",
+                    printing ? "text-slate-900" : "text-white",
+                  )}
+                >
                   <span
                     className={cn(
                       "w-3 h-8",
@@ -421,7 +680,12 @@ export default function AnalysisResult({
                     <p className="text-sm font-bold text-[#ef660f] uppercase tracking-tighter">
                       {phase.label}
                     </p>
-                    <p className="text-sm font-medium text-white/60  min-h-[60px]">
+                    <p
+                      className={cn(
+                        "text-sm font-medium min-h-[60px]",
+                        printing ? "text-slate-600" : "text-white/60",
+                      )}
+                    >
                       {phase.value || "Strategic details pending calculation."}
                     </p>
                   </div>
@@ -429,10 +693,20 @@ export default function AnalysisResult({
               </div>
 
               {/* Best 11 / Suggested XI */}
-              <div className="space-y-6 pt-10 border-t border-white/10">
+              <div
+                className={cn(
+                  "space-y-6 pt-10 border-t",
+                  printing ? "border-slate-100" : "border-white/10",
+                )}
+              >
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <h4 className="text-xs font-black uppercase  text-white">
+                  <h4
+                    className={cn(
+                      "text-xs font-black uppercase",
+                      printing ? "text-slate-900" : "text-white",
+                    )}
+                  >
                     CRICKET AGENT: BEST 11 PLAYERS RECOMMENDED
                   </h4>
                 </div>
@@ -440,21 +714,52 @@ export default function AnalysisResult({
                   {block.lineup?.map((p: any, li: number) => (
                     <div
                       key={li}
-                      className="p-4 bg-white/5 border border-white/10 hover:border-[#ef660f]/50 transition-all flex flex-col justify-between group"
+                      className={cn(
+                        "p-4 border transition-all flex flex-col justify-between group",
+                        printing
+                          ? "bg-slate-50 border-slate-100"
+                          : "bg-white/5 border-white/10 hover:border-[#ef660f]/50",
+                      )}
                     >
                       <div className="space-y-2">
                         <div className="flex justify-between items-start">
-                          <span className="text-xs font-black text-white group-hover:text-[#ef660f] transition-colors uppercase leading-none">
+                          <span
+                            className={cn(
+                              "text-xs font-black uppercase leading-none transition-colors",
+                              printing
+                                ? "text-slate-900"
+                                : "text-white group-hover:text-[#ef660f]",
+                            )}
+                          >
                             {p.name}
                           </span>
-                          <span className=" font-black bg-[#11074b] text-white/40 px-1.5 py-0.5 border border-white/10 uppercase">
+                          <span
+                            className={cn(
+                              "font-black px-1.5 py-0.5 border uppercase",
+                              printing
+                                ? "bg-slate-100 text-slate-400 border-slate-200"
+                                : "bg-[#11074b] text-white/40 border-white/10",
+                            )}
+                          >
                             {li + 1}
                           </span>
                         </div>
-                        <p className="t font-bold text-white uppercase tracking-tight">
+                        <p
+                          className={cn(
+                            "font-bold uppercase tracking-tight",
+                            printing ? "text-slate-700" : "text-white",
+                          )}
+                        >
                           {p.role}
                         </p>
-                        <p className=" text-white/60  font-medium text-sm md:pt-2 tracking-tight">
+                        <p
+                          className={cn(
+                            "font-medium text-sm md:pt-2 tracking-tight",
+                            printing
+                              ? "text-slate-500 italic"
+                              : "text-white/60",
+                          )}
+                        >
                           "{p.reasoning}"
                         </p>
                       </div>
@@ -480,63 +785,119 @@ export default function AnalysisResult({
                   )}
                 </button>
                 {displayRaw && (
-                  <div className="mt-4 overflow-x-auto border border-white/10">
+                  <div
+                    className={cn(
+                      "mt-4 overflow-x-auto border",
+                      printing ? "border-slate-100" : "border-white/10",
+                    )}
+                  >
                     <table className="w-full text-[10px] text-left">
                       <thead>
-                        <tr className="bg-white/5 border-b border-white/10">
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Player No
-                          </th>
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Name
-                          </th>
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Role
-                          </th>
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Batting Avg / Bowling Avg
-                          </th>
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Strike Rate / Economy
-                          </th>
-                          <th className="p-3 text-white/60 text-[11px] font-black uppercase tracking-wider">
-                            Form Status
-                          </th>
+                        <tr
+                          className={cn(
+                            "border-b",
+                            printing
+                              ? "bg-slate-50 border-slate-100"
+                              : "bg-white/5 border-white/10",
+                          )}
+                        >
+                          {[
+                            "Player No",
+                            "Name",
+                            "Role",
+                            "Batting Avg / Bowling Avg",
+                            "Strike Rate / Economy",
+                            "Form Status",
+                          ].map((h) => (
+                            <th
+                              key={h}
+                              className={cn(
+                                "p-3 text-[11px] font-black uppercase tracking-wider",
+                                printing ? "text-slate-400" : "text-white/60",
+                              )}
+                            >
+                              {h}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
                         {block.allPlayers?.map((player: any, pi: number) => (
                           <tr
                             key={pi}
-                            className="border-b border-white/5 hover:bg-white/5 transition-colors group"
+                            className={cn(
+                              "border-b transition-colors group",
+                              printing
+                                ? "border-slate-50 bg-white"
+                                : "border-white/5 hover:bg-white/5",
+                            )}
                           >
-                            <td className="p-3  text-white/40 group-hover:text-[#ef660f]">
+                            <td
+                              className={cn(
+                                "p-3",
+                                printing
+                                  ? "text-slate-400"
+                                  : "text-white/40 group-hover:text-[#ef660f]",
+                              )}
+                            >
                               #{player.Player_id || pi + 1}
                             </td>
-                            <td className="p-3 font-semibold  text-white uppercase ">
-                              {player.Full_Name || player.name}
-                              <span className="block text-[8px] text-white/40 font-bold">
+                            <td className="p-3 font-semibold uppercase">
+                              <span
+                                className={
+                                  printing ? "text-slate-900" : "text-white"
+                                }
+                              >
+                                {player.Full_Name || player.name}
+                              </span>
+                              <span
+                                className={cn(
+                                  "block text-[8px] font-bold",
+                                  printing ? "text-slate-400" : "text-white/40",
+                                )}
+                              >
                                 {player.Batting_Style} • {player.Age}Y
                               </span>
                             </td>
-                            <td className="p-3  text-white/60 uppercase">
+                            <td
+                              className={cn(
+                                "p-3 uppercase",
+                                printing ? "text-slate-600" : "text-white/60",
+                              )}
+                            >
                               {player.Playing_Role || player.role}
                             </td>
                             <td className="p-3 ">
-                              <span className="text-[#3b26fb]">
+                              <span
+                                className={
+                                  printing ? "text-slate-500" : "text-[#3b26fb]"
+                                }
+                              >
                                 B: {player.T20Is_Batting_Ave || "0"}
                               </span>
-                              <span className="mx-2 text-white/20">|</span>
+                              <span
+                                className={cn(
+                                  "mx-2",
+                                  printing ? "text-slate-200" : "text-white/20",
+                                )}
+                              >
+                                |
+                              </span>
                               <span className="text-[#ef660f]">
                                 W: {player.T20Is_Bowling_Ave || "0"}
                               </span>
                             </td>
-                            <td className="p-3  text-white/60">
+                            <td
+                              className={cn(
+                                "p-3",
+                                printing ? "text-slate-500" : "text-white/60",
+                              )}
+                            >
                               {player.T20Is_Batting_SR || "0"} SR /{" "}
                               {player.T20Is_Bowling_Econ || "0"} EC
                             </td>
                             <td className="p-3">
-                              <Badge className="bg-emerald-500/10 text-emerald-400 rounded-none border-none text-[7px] font-black uppercase tracking-widest px-1">
+                              <Badge className="bg-emerald-500/10 text-emerald-600 rounded-none border-none text-[7px] font-black uppercase tracking-widest px-1">
                                 STABLE
                               </Badge>
                             </td>
@@ -554,7 +915,14 @@ export default function AnalysisResult({
 
       {/* Final Meta & Critical Factors Summary */}
       <div className="grid grid-cols-1 gap-6">
-        <Card className="rounded-none border-2 border-white/10 bg-white/5 p-10">
+        <Card
+          className={cn(
+            "rounded-none border-2 p-10",
+            printing
+              ? "bg-slate-50 border-slate-200"
+              : "bg-white/5 border-white/10",
+          )}
+        >
           <SectionHeader
             icon={Activity}
             title="Operational Conclusion & Strategic Vectors"
@@ -568,18 +936,42 @@ export default function AnalysisResult({
               {analysis.critical_factors?.map((f: string, i: number) => (
                 <div
                   key={i}
-                  className="flex gap-4 items-start p-3 border border-white/10 hover:border-[#ef660f]/30 hover:bg-white/5 transition-all"
+                  className={cn(
+                    "flex gap-4 items-start p-3 border transition-all",
+                    printing
+                      ? "bg-white border-slate-100"
+                      : "border-white/10 hover:border-[#ef660f]/30 hover:bg-white/5",
+                  )}
                 >
                   <CheckCircle2 className="w-4 h-4 text-[#ef660f] shrink-0 mt-0.5" />
-                  <p className="text-sm font-bold text-white/60 ">{f}</p>
+                  <p
+                    className={cn(
+                      "text-sm font-bold",
+                      printing ? "text-slate-600" : "text-white/60",
+                    )}
+                  >
+                    {f}
+                  </p>
                 </div>
               ))}
             </div>
-            <div className="p-8 bg-black/40 text-white space-y-6 border border-white/10 backdrop-blur-md">
+            <div
+              className={cn(
+                "p-8 space-y-6 border backdrop-blur-md",
+                printing
+                  ? "bg-slate-100 border-slate-200"
+                  : "bg-black/40 text-white border-white/10",
+              )}
+            >
               <p className="text-xs font-black text-[#ef660f] uppercase tracking-widest">
                 Neural Narrative Conclusion
               </p>
-              <div className="text-sm font-medium text-white/80 leading-relaxed  whitespace-pre-wrap">
+              <div
+                className={cn(
+                  "text-sm font-medium leading-relaxed whitespace-pre-wrap",
+                  printing ? "text-slate-800" : "text-white/80",
+                )}
+              >
                 {typeof analysis.analysis === "string"
                   ? analysis.analysis
                   : "Simulation successfully completed. All tactical vectors point towards optimized resource management in rain-affected conditions."}
