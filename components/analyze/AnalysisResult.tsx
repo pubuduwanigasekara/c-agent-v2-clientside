@@ -111,7 +111,7 @@ export default function AnalysisResult({
       >
         <div className="space-y-4 flex-1">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ef660f]/10 text-[#ef660f] text-xs font-semibold tracking-tight rounded-lg border border-[#ef660f]/20">
-            Match Intelligence | Pre Match Analysis
+            Match Intelligence | T20 Pre Match Analysis
           </div>
           <h2
             className={cn(
@@ -274,7 +274,7 @@ export default function AnalysisResult({
           <div className="relative z-10 space-y-4 h-full flex flex-col justify-between">
             <div className="space-y-4">
               <p className="text-[10px] font-black text-[#ef660f] uppercase tracking-widest">
-                Condition Optimized Toss
+                Bat or Bowl First?
               </p>
               <h3
                 className={cn(
