@@ -334,7 +334,10 @@ export default function AnalyzePage() {
             Get AI and data-driven pre-match insights and strategic
             recommendations for{" "}
             <span className="text-white font-bold underline underline-offset-4 decoration-[#ef660f] decoration-2">
-              International T20 matches.
+              International T20 matches. <br />
+            </span>
+            <span className="text-sm bg-white/10 border border-white/10 rounded-sm px-3 py-1">
+              ICC Men's T20 World Cup, 2026 🏏{" "}
             </span>
           </p>
         </div>
@@ -401,19 +404,25 @@ export default function AnalyzePage() {
                         Playing Conditions
                       </h3>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                      <div className="md:col-span-1">
-                        <GroundSelector value={ground} onChange={setGround} />
-                      </div>
-                      <div className="md:col-span-2">
-                        <MatchDateTime
-                          date={date}
-                          time={time}
-                          onDateChange={setDate}
-                          onTimeChange={setTime}
-                        />
+                    <div>
+                      <p className="text-sm pb- text-white/80">
+                        Enter match details below
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                        <div className="md:col-span-1">
+                          <GroundSelector value={ground} onChange={setGround} />
+                        </div>
+                        <div className="md:col-span-2">
+                          <MatchDateTime
+                            date={date}
+                            time={time}
+                            onDateChange={setDate}
+                            onTimeChange={setTime}
+                          />
+                        </div>
                       </div>
                     </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <Select
                         label="Match Timezone"
@@ -528,9 +537,6 @@ export default function AnalyzePage() {
                       {REASONING_LOGS[currentLogIndex]}
                     </p>
                   </div>
-                  <p className="text-white/60 font-medium text-xs uppercase tracking-tighter">
-                    Consulting high-dimensional models for accuracy
-                  </p>
                 </div>
               </div>
             )}
@@ -553,7 +559,7 @@ export default function AnalyzePage() {
           </div>
         </section>
 
-        {result && (
+        {/* {result && (
           <section id="chat" className="space-y-4">
             <ChatSection />
             <p className="text-center text-[10px] text-white/60 font-medium flex items-center justify-center gap-2 pb-8">
@@ -562,7 +568,7 @@ export default function AnalyzePage() {
               officials for definitive rules.
             </p>
           </section>
-        )}
+        )} */}
       </div>
 
       {/* WhatsApp Fixed Button */}
