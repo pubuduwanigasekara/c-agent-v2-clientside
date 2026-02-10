@@ -39,8 +39,6 @@ export default function AnalysisResult({
   printing?: boolean;
 }) {
   const [showRaw, setShowRaw] = useState(false);
-  const [openStrategy, setOpenStrategy] = useState(false);
-  const [openPrediction, setOpenPrediction] = useState(false);
   const [openHomeXI, setOpenHomeXI] = useState(false);
   const [openAwayXI, setOpenAwayXI] = useState(false);
 
@@ -101,7 +99,7 @@ export default function AnalysisResult({
   return (
     <div
       className={cn(
-        "space-y-12 pb-20 container mx-auto px-4 md:px-0",
+        "space-y-12 pb-20 container mx-auto px-0 md:px-0",
         printing ? "bg-white text-slate-900" : "text-white",
         !printing && "animate-in fade-in slide-in-from-bottom-4 duration-1000",
       )}
@@ -109,7 +107,7 @@ export default function AnalysisResult({
       {/* Header / Identity Area */}
       <div
         className={cn(
-          "flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-4",
+          "flex flex-col md:flex-row md:items-end justify-between gap-6 px-4 pb-8 border-b-4",
           printing ? "border-slate-200" : "border-white/10",
         )}
       >
@@ -215,7 +213,7 @@ export default function AnalysisResult({
                   </p>
                   <h4
                     className={cn(
-                      "text-6xl font-black",
+                      "text-5xl font-black",
                       printing ? "text-slate-900" : "text-white",
                     )}
                   >
@@ -237,7 +235,7 @@ export default function AnalysisResult({
                   >
                     {matchInfo.opponent_team || teams.opponent_team?.team_name}
                   </p>
-                  <h4 className="text-6xl font-black text-[#ef660f]">
+                  <h4 className="text-5xl font-black text-[#ef660f]">
                     {analysis.win_probability?.opponent_team || 0}%
                   </h4>
                 </div>
@@ -269,7 +267,7 @@ export default function AnalysisResult({
           {/* Weather Analysis */}
           <Card
             className={cn(
-              "rounded-none border-2 p-8 space-y-6 relative overflow-hidden",
+              "rounded-none border-2 p-6 space-y-6 relative overflow-hidden",
               printing
                 ? "bg-white border-slate-200"
                 : "border-white/10 bg-white/5 backdrop-blur-xl",
@@ -397,7 +395,7 @@ export default function AnalysisResult({
                       : "bg-white/5 border-white/10",
                   )}
                 >
-                  <Info className="w-4 h-4 text-[#ef660f] shrink-0 mt-0.5" />
+                  {/* <Info className="w-4 h-4 text-[#ef660f] shrink-0 mt-0.5" /> */}
                   <p
                     className={cn(
                       "text-sm font-medium",
@@ -592,7 +590,7 @@ export default function AnalysisResult({
                       {m.target_batter}
                     </h4>
                   </div>
-                  <Badge className="bg-[#ff6200] text-white rounded-none text-[10px] px-2">
+                  <Badge className="bg-[#ff6200] text-white rounded-none text-[13px] px-2 tracking-tight ">
                     {m.matchup_importance}
                   </Badge>
                 </div>
@@ -759,23 +757,7 @@ export default function AnalysisResult({
             title={`${teams.your_team?.team_name || "Your"} Game Strategy`}
             badge=""
           />
-          <button
-            onClick={() => setOpenStrategy(!openStrategy)}
-            className="md:hidden w-full flex items-center justify-between p-4 bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest text-[#ef660f]"
-          >
-            Detailed Strategy
-            {openStrategy ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
-          </button>
-          <div
-            className={cn(
-              "space-y-4",
-              !openStrategy && !printing && "hidden md:block",
-            )}
-          >
+          <div className="space-y-4">
             {["powerplay", "middle_overs", "death_overs"].map((phase) => (
               <div
                 key={phase}
@@ -810,23 +792,7 @@ export default function AnalysisResult({
             title={`${teams.opponent_team?.team_name || "Opponent"} Game Prediction`}
             badge=""
           />
-          <button
-            onClick={() => setOpenPrediction(!openPrediction)}
-            className="md:hidden w-full flex items-center justify-between p-4 bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest text-white/60"
-          >
-            View Prediction
-            {openPrediction ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
-          </button>
-          <div
-            className={cn(
-              "space-y-4",
-              !openPrediction && !printing && "hidden md:block",
-            )}
-          >
+          <div className="space-y-4">
             {["powerplay", "middle_overs", "death_overs"].map((phase) => (
               <div
                 key={phase}
@@ -869,14 +835,14 @@ export default function AnalysisResult({
             badge=""
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Your Team Recommended XI */}
-            <div className="space-y-6">
+            <div className="space-y-1">
               <button
                 onClick={() => setOpenHomeXI(!openHomeXI)}
-                className="w-full flex items-center justify-between md:cursor-default"
+                className="w-full flex items-center justify-between md:cursor-default bg-white/5 border border-white/10 p-3"
               >
-                <h4 className="text-xs font-black uppercase text-[#ef660f] tracking-widest">
+                <h4 className="text-xs font-black uppercase bg- text-[#ef660f] tracking-widest">
                   {teams.your_team?.team_name || "Home"} XI
                 </h4>
                 <div className="md:hidden">
@@ -942,7 +908,7 @@ export default function AnalysisResult({
             <div className="space-y-6">
               <button
                 onClick={() => setOpenAwayXI(!openAwayXI)}
-                className="w-full flex items-center justify-between md:cursor-default"
+                className="w-full flex items-center justify-between md:cursor-default bg-white/5 border border-white/10 p-3"
               >
                 <h4
                   className={cn(
@@ -1153,8 +1119,8 @@ export default function AnalysisResult({
           printing ? "border-slate-100" : "border-white/10",
         )}
       >
-        <p className="text-[10px] font-black uppercase tracking-[0.5em]">
-          End of Intelligence Report
+        <p className="text-[16px] font-black uppercase tracking-tight">
+          Ask AI Coming Soon ...
         </p>
       </div>
     </div>

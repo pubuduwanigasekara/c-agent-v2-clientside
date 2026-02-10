@@ -400,9 +400,9 @@ export default function AnalyzePage() {
             <span className="text-white font-bold underline underline-offset-4 decoration-[#ef660f] decoration-2">
               International T20 matches. <br />
             </span>
-            <span className="text-sm bg-white/10 border border-white/10 rounded-sm px-3 py-1">
-              ICC Men's T20 World Cup, 2026 🏏{" "}
-            </span>
+          </p>
+          <p className="text-sm bg-white/10 border border-white/10 rounded-sm px-3 py-1 mt-3 lg:inline-block w-fit">
+            ICC Men's T20 World Cup, 2026 🏏{" "}
           </p>
         </div>
       </div>
@@ -469,7 +469,7 @@ export default function AnalyzePage() {
                       </h3>
                     </div>
                     <div>
-                      <p className="text-sm pb- text-white/80">
+                      <p className="text-sm pb-2 text-white/80">
                         Enter match details below
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
@@ -515,7 +515,7 @@ export default function AnalyzePage() {
             </div>
 
             {/* Right Sidebar */}
-            <div className="lg:col-span-4 space-y-6 pt-12 lg:pt-0">
+            <div className="hidden lg:block lg:col-span-4 space-y-6 pt-12 lg:pt-0">
               <Card className="p-8 border-white/10 bg-white/5 backdrop-blur-xl text-white relative overflow-hidden group ring-1 ring-white/10">
                 <div className="relative z-10 space-y-6">
                   <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-[#ef660f]/10 text-[#ef660f] text-[10px] font-black uppercase tracking-widest border border-[#ef660f]/20">
@@ -589,14 +589,14 @@ export default function AnalyzePage() {
                     <Sparkles className="w-6 h-6 text-[#ef660f]/60 absolute animate-pulse" />
                   </div>
                 </div>
-                <div className="text-center space-y-4 max-w-md mx-auto">
-                  <h3 className="text-white font-black text-2xl tracking-tight uppercase">
-                    Quantizing Match Data...
+                <div className="text-center space-y-2 max-w-md mx-auto">
+                  <h3 className="text-white font-black text-lg lg:text-2xl tracking-tight uppercase">
+                    Analyzing Match Data
                   </h3>
                   <div className="h-6 overflow-hidden">
                     <p
                       key={currentLogIndex}
-                      className="text-[#ef660f] font-bold text-sm uppercase tracking-widest animate-in fade-in slide-in-from-bottom-2 duration-500"
+                      className="text-[#ef660f] font-bold text-sm  tracking-normal animate-in fade-in slide-in-from-bottom-2 duration-500"
                     >
                       {REASONING_LOGS[currentLogIndex]}
                     </p>
