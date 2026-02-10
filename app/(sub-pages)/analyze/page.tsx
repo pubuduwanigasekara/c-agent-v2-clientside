@@ -21,9 +21,11 @@ import {
   Trophy,
   Info,
   Users,
+  Download,
+  Menu,
+  X,
 } from "lucide-react";
 import ChatSection from "@/components/pages/chat/ChatSection";
-import { Download } from "lucide-react";
 import { toast } from "sonner";
 import Footer from "@/components/ui/Footer";
 import Link from "next/link";
@@ -62,9 +64,9 @@ export default function AnalyzePage() {
   const [result, setResult] = useState<any>(null);
   const [currentLogIndex, setCurrentLogIndex] = useState(0);
 
-  // Scroll state
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Content Protection logic
   useEffect(() => {
@@ -263,7 +265,9 @@ export default function AnalyzePage() {
               />
             </Link>
           </div>
-          <div className="flex items-center gap-4 md:gap-6">
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-6">
             {[
               { label: "Report", id: "analysis-result" },
               { label: "Ask AI", id: "chat" },
@@ -286,7 +290,7 @@ export default function AnalyzePage() {
                 {link.label}
               </button>
             ))}
-            <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
+            <div className="h-6 w-px bg-white/10 mx-1"></div>
             <button
               disabled={!result}
               onClick={handleExportPDF}
@@ -297,7 +301,67 @@ export default function AnalyzePage() {
               }`}
             >
               <Download className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Export PDF</span>
+              <span>Export PDF</span>
+            </button>
+          </div>
+
+          {/* Mobile Nav Toggle */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        <div
+          className={`md:hidden absolute top-full left-0 right-0 bg-[#11074b] backdrop-blur-xl border-b border-white/10 overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? "max-h-96 border-t" : "max-h-0"
+          }`}
+        >
+          <div className="p-6 space-y-4">
+            {[
+              { label: "Report", id: "analysis-result" },
+              { label: "Ask AI", id: "chat" },
+              { label: "New Analysis", id: "analyze-form" },
+            ].map((link) => (
+              <button
+                key={link.id}
+                disabled={!result}
+                onClick={() => {
+                  document
+                    .getElementById(link.id)
+                    ?.scrollIntoView({ behavior: "smooth" });
+                  setIsMenuOpen(false);
+                }}
+                className={`block w-full text-left text-sm font-bold uppercase tracking-widest py-2 transition-colors ${
+                  !result
+                    ? "text-white/50 cursor-not-allowed"
+                    : "text-white hover:text-[#ef660f]"
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+            <button
+              disabled={!result}
+              onClick={() => {
+                handleExportPDF();
+                setIsMenuOpen(false);
+              }}
+              className={`flex items-center gap-3 w-full py-4 text-sm font-bold transition-all border-t border-white/5 ${
+                !result ? "text-white/20 cursor-not-allowed" : "text-[#ef660f]"
+              }`}
+            >
+              <Download className="w-4 h-4" />
+              <span>Export Analysis PDF</span>
             </button>
           </div>
         </div>
@@ -484,7 +548,7 @@ export default function AnalyzePage() {
                 </div>
               </Card>
 
-              <Card className="p-8 border-white/10 bg-white/5 backdrop-blur-xl space-y-6">
+              <Card className="p-8 border-white/10 bg-white/5 backdrop-blur-xl space-y-6 hidden lg:block">
                 <h4 className="font-bold text-white text-sm  tracking-tight border-b border-white/10 pb-3">
                   Ready Check / Ready to start ?
                 </h4>
