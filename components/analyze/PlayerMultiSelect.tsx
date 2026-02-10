@@ -126,7 +126,7 @@ export default function PlayerMultiSelect({
                 <button
                   key={p.Player_id}
                   onClick={() => toggle(p.Full_Name)}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-lg text-sm transition-all group ${
+                  className={`w-full flex items-center justify-between p-2.5  rounded-lg text-sm transition-all group ${
                     isActive
                       ? "bg-[#ef660f]/20 text-white border border-[#ef660f]/40"
                       : "hover:bg-white/5 text-white border border-transparent"
