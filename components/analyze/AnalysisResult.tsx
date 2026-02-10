@@ -39,6 +39,10 @@ export default function AnalysisResult({
   printing?: boolean;
 }) {
   const [showRaw, setShowRaw] = useState(false);
+  const [openStrategy, setOpenStrategy] = useState(false);
+  const [openPrediction, setOpenPrediction] = useState(false);
+  const [openHomeXI, setOpenHomeXI] = useState(false);
+  const [openAwayXI, setOpenAwayXI] = useState(false);
 
   // If printing, force expand accordions
   const displayRaw = printing || showRaw;
@@ -97,7 +101,7 @@ export default function AnalysisResult({
   return (
     <div
       className={cn(
-        "space-y-12 pb-20 container mx-auto px-6 md:px-0",
+        "space-y-12 pb-20 container mx-auto px-4 md:px-0",
         printing ? "bg-white text-slate-900" : "text-white",
         !printing && "animate-in fade-in slide-in-from-bottom-4 duration-1000",
       )}
@@ -755,7 +759,23 @@ export default function AnalysisResult({
             title={`${teams.your_team?.team_name || "Your"} Game Strategy`}
             badge=""
           />
-          <div className="space-y-4">
+          <button
+            onClick={() => setOpenStrategy(!openStrategy)}
+            className="md:hidden w-full flex items-center justify-between p-4 bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest text-[#ef660f]"
+          >
+            Detailed Strategy
+            {openStrategy ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+          <div
+            className={cn(
+              "space-y-4",
+              !openStrategy && !printing && "hidden md:block",
+            )}
+          >
             {["powerplay", "middle_overs", "death_overs"].map((phase) => (
               <div
                 key={phase}
@@ -790,7 +810,23 @@ export default function AnalysisResult({
             title={`${teams.opponent_team?.team_name || "Opponent"} Game Prediction`}
             badge=""
           />
-          <div className="space-y-4">
+          <button
+            onClick={() => setOpenPrediction(!openPrediction)}
+            className="md:hidden w-full flex items-center justify-between p-4 bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest text-white/60"
+          >
+            View Prediction
+            {openPrediction ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+          <div
+            className={cn(
+              "space-y-4",
+              !openPrediction && !printing && "hidden md:block",
+            )}
+          >
             {["powerplay", "middle_overs", "death_overs"].map((phase) => (
               <div
                 key={phase}
@@ -836,10 +872,28 @@ export default function AnalysisResult({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Your Team Recommended XI */}
             <div className="space-y-6">
-              <h4 className="text-xs font-black uppercase text-[#ef660f] tracking-widest">
-                {teams.your_team?.team_name || "Home"} XI
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={() => setOpenHomeXI(!openHomeXI)}
+                className="w-full flex items-center justify-between md:cursor-default"
+              >
+                <h4 className="text-xs font-black uppercase text-[#ef660f] tracking-widest">
+                  {teams.your_team?.team_name || "Home"} XI
+                </h4>
+                <div className="md:hidden">
+                  {openHomeXI ? (
+                    <ChevronUp className="w-4 h-4 text-[#ef660f]" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[#ef660f]" />
+                  )}
+                </div>
+              </button>
+
+              <div
+                className={cn(
+                  "grid grid-cols-1 sm:grid-cols-2 gap-3",
+                  !openHomeXI && !printing && "hidden md:grid",
+                )}
+              >
                 {analysis.your_team_best_11?.map((p: any, i: number) => (
                   <div
                     key={i}
@@ -886,15 +940,33 @@ export default function AnalysisResult({
 
             {/* Opponent Team Predicted XI */}
             <div className="space-y-6">
-              <h4
+              <button
+                onClick={() => setOpenAwayXI(!openAwayXI)}
+                className="w-full flex items-center justify-between md:cursor-default"
+              >
+                <h4
+                  className={cn(
+                    "text-xs font-black uppercase tracking-widest",
+                    printing ? "text-slate-400" : "text-white/40",
+                  )}
+                >
+                  {teams.opponent_team?.team_name || "Away"} XI
+                </h4>
+                <div className="md:hidden">
+                  {openAwayXI ? (
+                    <ChevronUp className="w-4 h-4 text-white/40" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-white/40" />
+                  )}
+                </div>
+              </button>
+
+              <div
                 className={cn(
-                  "text-xs font-black uppercase tracking-widest",
-                  printing ? "text-slate-400" : "text-white/40",
+                  "grid grid-cols-1 sm:grid-cols-2 gap-3",
+                  !openAwayXI && !printing && "hidden md:grid",
                 )}
               >
-                {teams.opponent_team?.team_name || "Away"} XI
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {analysis.opponent_team_best_11?.map((p: any, i: number) => (
                   <div
                     key={i}
