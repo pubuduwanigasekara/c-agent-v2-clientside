@@ -530,7 +530,7 @@ export default function AnalysisResult({
                   </div>
                   <p
                     className={cn(
-                      "text-xs font-medium leading-relaxed",
+                      "text-sm font-medium leading-relaxed",
                       printing ? "text-slate-600" : "text-white/60",
                     )}
                   >
@@ -590,7 +590,7 @@ export default function AnalysisResult({
                       {m.target_batter}
                     </h4>
                   </div>
-                  <Badge className="bg-[#ff6200] text-white rounded-none text-[13px] px-2 tracking-tight ">
+                  <Badge className="bg-[#ff6200] text-white rounded-none text-sm font-medium px-2 tracking-tight ">
                     {m.matchup_importance}
                   </Badge>
                 </div>
@@ -611,10 +611,10 @@ export default function AnalysisResult({
                     printing ? "text-slate-500" : "text-white/40",
                   )}
                 >
-                  <span className=" font-semibold pb-1">
+                  <span className=" font-semibold pb-1 text-sm">
                     Field: {m.field_setup}
                   </span>
-                  <span className="text-[#ffffff] font-medium">
+                  <span className="text-[#ffffff] text-sm font-medium">
                     {m.expected_outcome}
                   </span>
                 </div>
@@ -668,11 +668,11 @@ export default function AnalysisResult({
                   <span className=" capitalize">{p.player_to_control}</span>
                 </h4>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="lg:grid lg:grid-cols-2 flex flex-col gap-4">
                 <div className="space-y-1">
                   <p
                     className={cn(
-                      "text-[8px] font-black uppercase",
+                      "text-xs font-black uppercase",
                       printing ? "text-slate-400" : "text-white/40",
                     )}
                   >
@@ -680,7 +680,7 @@ export default function AnalysisResult({
                   </p>
                   <p
                     className={cn(
-                      "text-[10px] font-bold",
+                      "text-sm font-bold",
                       printing ? "text-slate-700" : "text-white",
                     )}
                   >
@@ -690,7 +690,7 @@ export default function AnalysisResult({
                 <div className="space-y-1">
                   <p
                     className={cn(
-                      "text-[8px] font-black uppercase",
+                      "text-xs font-black uppercase",
                       printing ? "text-slate-400" : "text-white/40",
                     )}
                   >
@@ -698,7 +698,7 @@ export default function AnalysisResult({
                   </p>
                   <p
                     className={cn(
-                      "text-[10px] font-bold",
+                      "text-sm font-bold",
                       printing ? "text-slate-700" : "text-white",
                     )}
                   >
@@ -719,7 +719,7 @@ export default function AnalysisResult({
                 </p>
                 <p
                   className={cn(
-                    "text-xs font-medium leading-relaxed italic",
+                    "text-sm font-medium leading-relaxed ",
                     printing ? "text-slate-600" : "text-white/70",
                   )}
                 >
@@ -732,12 +732,14 @@ export default function AnalysisResult({
                   printing ? "text-slate-500" : "text-white/40",
                 )}
               >
-                <span className="flex items-center gap-1">
-                  <Users className="w-3 h-3" /> {p.bowler_type}
+                <span className="flex items-center gap-1 text-xs">
+                  <Users className="w-4 h-4" /> {p.bowler_type}
                 </span>
                 <span
                   className={cn(
-                    printing ? "text-slate-700" : "text-[#ffffff]/70",
+                    printing
+                      ? "text-slate-700 text-sm"
+                      : "text-[#ffffff]/70 text-sm",
                   )}
                 >
                   Outcome: {p.expected_outcome}
@@ -805,7 +807,7 @@ export default function AnalysisResult({
               >
                 <p
                   className={cn(
-                    "text-[10px] font-black uppercase mb-2 tracking-tighter",
+                    "text-xs font-black uppercase mb-2 tracking-tighter",
                     printing ? "text-slate-400" : "text-white/40",
                   )}
                 >
@@ -873,7 +875,7 @@ export default function AnalysisResult({
                     <div className="flex justify-between items-start mb-1">
                       <span
                         className={cn(
-                          "lg:text-[10px] text-[12px] font-black capitalize truncate max-w-[80%]",
+                          "lg:text-sm text-sm font-black capitalize truncate max-w-[80%]",
                           printing ? "text-slate-900" : "text-white",
                         )}
                       >
@@ -885,7 +887,7 @@ export default function AnalysisResult({
                     </div>
                     <p
                       className={cn(
-                        "lg:text-[10px] text-[12px] font-black capitalize",
+                        "lg:text-sm text-sm font-black capitalize",
                         printing ? "text-slate-400" : "text-white/40",
                       )}
                     >
@@ -893,7 +895,7 @@ export default function AnalysisResult({
                     </p>
                     <p
                       className={cn(
-                        "lg:text-[10px] text-[12px] font-medium mt-2 line-clamp-2 italic",
+                        "lg:text-sm text-sm font-medium mt-2 line-clamp-2 ",
                         printing ? "text-slate-600" : "text-white/60",
                       )}
                     >
@@ -912,7 +914,7 @@ export default function AnalysisResult({
               >
                 <h4
                   className={cn(
-                    "text-xs font-black uppercase tracking-widest",
+                    "text-sm font-black uppercase tracking-widest",
                     printing ? "text-slate-400" : "text-white/40",
                   )}
                 >
@@ -946,7 +948,7 @@ export default function AnalysisResult({
                     <div className="flex justify-between items-start mb-1">
                       <span
                         className={cn(
-                          "lg:text-[10px] text-[12px] font-black capitalize truncate max-w-[80%]",
+                          "lg:text-sm text-sm font-black capitalize truncate max-w-[80%]",
                           printing ? "text-slate-900" : "text-white/80",
                         )}
                       >
@@ -954,7 +956,7 @@ export default function AnalysisResult({
                       </span>
                       <span
                         className={cn(
-                          "text-[10px] font-bold",
+                          "text-sm font-bold",
                           printing ? "text-slate-300" : "text-white/20",
                         )}
                       >
@@ -963,7 +965,7 @@ export default function AnalysisResult({
                     </div>
                     <p
                       className={cn(
-                        "lg:text-[10px] text-[12px] font-black capitalize",
+                        "lg:text-sm text-sm font-black capitalize",
                         printing ? "text-slate-400" : "text-white/40",
                       )}
                     >
@@ -971,7 +973,7 @@ export default function AnalysisResult({
                     </p>
                     <p
                       className={cn(
-                        "lg:text-[10px] text-[12px] font-medium mt-2 line-clamp-2 italic",
+                        "lg:text-sm text-sm font-medium mt-2 line-clamp-2 ",
                         printing ? "text-slate-500" : "text-white/40",
                       )}
                     >
@@ -1070,7 +1072,7 @@ export default function AnalysisResult({
       <div className="grid grid-cols-1 gap-6">
         <Card
           className={cn(
-            "rounded-none border-2 p-10",
+            "rounded-none border-2 p-5",
             printing
               ? "bg-white border-slate-200"
               : "bg-white/5 border-white/10",
@@ -1119,8 +1121,8 @@ export default function AnalysisResult({
           printing ? "border-slate-100" : "border-white/10",
         )}
       >
-        <p className="text-[16px] font-black uppercase tracking-tight">
-          Ask AI Coming Soon ...
+        <p className="text-lg font-black uppercase">
+          &apos; Ask AI &apos; is Coming Soon ...
         </p>
       </div>
     </div>
