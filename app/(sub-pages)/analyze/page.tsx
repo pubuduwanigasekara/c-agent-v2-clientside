@@ -401,7 +401,7 @@ export default function AnalyzePage() {
               International T20 matches. <br />
             </span>
           </p>
-          <p className="text-sm bg-white/10 border border-white/10 rounded-sm px-3 py-1 mt-3 lg:inline-block w-fit">
+          <p className="text-sm text-white bg-white/10 border border-white/10 rounded-sm px-3 py-1 mt-3 lg:inline-block w-fit">
             ICC Men's T20 World Cup, 2026 🏏{" "}
           </p>
         </div>
