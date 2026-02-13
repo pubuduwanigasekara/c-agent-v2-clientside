@@ -233,11 +233,23 @@ export default function AnalyzePage() {
       client_id: "cricket_web_app_v2",
       user_id: "user_internal_001",
     };
+try {
+  const res = await analyzeMatch(payload);
 
-    try {
-      const res = await analyzeMatch(payload);
-      setResult(res);
-    } catch (err) {
+  // 🔥 IMPORTANT: Save session id for Chat
+  if (res?.status === "SUCCESS") {
+    const backendSessionId =
+      res?.data?.session_id || payload.session_id;
+
+    localStorage.setItem(
+      "cagent_current_session_id",
+      backendSessionId
+    );
+  }
+
+  setResult(res);
+}
+ catch (err) {
       console.error(err);
       toast.error(
         "Analysis failed. Please check your connection and try again.",
@@ -623,7 +635,7 @@ export default function AnalyzePage() {
           </div>
         </section>
 
-        {/* {result && (
+        {result && (
           <section id="chat" className="space-y-4">
             <ChatSection />
             <p className="text-center text-[10px] text-white/60 font-medium flex items-center justify-center gap-2 pb-8">
@@ -632,7 +644,7 @@ export default function AnalyzePage() {
               officials for definitive rules.
             </p>
           </section>
-        )} */}
+        )} 
       </div>
 
       {/* WhatsApp Fixed Button */}

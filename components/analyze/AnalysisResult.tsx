@@ -1114,7 +1114,7 @@ export default function AnalysisResult({
         </Card>
       </div>
 
-      {/* Footer Meta */}
+      {/* Footer Meta
       <div
         className={cn(
           "text-center pt-8 border-t opacity-20",
@@ -1124,7 +1124,7 @@ export default function AnalysisResult({
         <p className="text-lg font-black uppercase">
           &apos; Ask AI &apos; is Coming Soon ...
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
