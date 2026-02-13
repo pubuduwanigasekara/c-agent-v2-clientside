@@ -33,6 +33,21 @@ export default function ChatSection() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+useEffect(() => {
+  const storedSession =
+    localStorage.getItem("cagent_current_session_id");
+
+  if (storedSession) {
+    setSessionId(storedSession);
+  } else {
+    const newSession = `chat_sess_${Date.now()}`;
+    setSessionId(newSession);
+  }
+}, []);
+
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom
@@ -59,29 +74,40 @@ export default function ChatSection() {
     try {
       const payload = {
         message: currentInput,
-        session_id: `chat_sess_${Date.now()}`,
+        session_id: sessionId || `chat_sess_${Date.now()}`,
+
         client_id: "cricket_web_app_v2",
         user_id: "user_internal_001",
       };
 
       const res = await chat(payload);
+console.log("CHAT RESPONSE:", res);
 
-      if (res.status === "SUCCESS") {
-        const assistantMessage: Message = {
-          role: "assistant",
-          content: res.data.response,
-          confidence: res.confidence,
-          metadata: {
-            rag: res.data.context_info,
-            processing_time: res.meta.processing_time_ms,
-            id: res.meta.request_id,
-          },
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
-      } else {
-        throw new Error("API returned failure status");
-      }
+if (res?.status === "SUCCESS" && res?.data?.response) {
+  const assistantMessage: Message = {
+    role: "assistant",
+    content: res.data.response,
+    confidence: res.confidence,
+    metadata: {
+      rag: res.data.context_info,
+      processing_time: res.meta?.processing_time_ms,
+      id: res.meta?.request_id,
+    },
+    timestamp: new Date(),
+  };
+
+  setMessages((prev) => [...prev, assistantMessage]);
+} else {
+  const errorText =
+    res?.errors?.[0] ||
+    "The server returned an unexpected response.";
+
+  setMessages((prev) => [
+    ...prev,
+    { role: "assistant", content: errorText, timestamp: new Date() },
+  ]);
+}
+
     } catch (error) {
       console.error("Chat Error:", error);
       const errorMessage: Message = {
