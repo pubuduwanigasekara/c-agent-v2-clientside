@@ -35,18 +35,16 @@ export default function ChatSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-useEffect(() => {
-  const storedSession =
-    localStorage.getItem("cagent_current_session_id");
+  useEffect(() => {
+    const storedSession = localStorage.getItem("cagent_current_session_id");
 
-  if (storedSession) {
-    setSessionId(storedSession);
-  } else {
-    const newSession = `chat_sess_${Date.now()}`;
-    setSessionId(newSession);
-  }
-}, []);
-
+    if (storedSession) {
+      setSessionId(storedSession);
+    } else {
+      const newSession = `chat_sess_${Date.now()}`;
+      setSessionId(newSession);
+    }
+  }, []);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -81,38 +79,40 @@ useEffect(() => {
       };
 
       const res = await chat(payload);
-console.log("CHAT RESPONSE:", res);
+      console.log("CHAT RESPONSE:", res);
 
-if (res?.status === "SUCCESS" && res?.data?.response) {
-  const assistantMessage: Message = {
-    role: "assistant",
-    content: res.data.response,
-    confidence: res.confidence,
-    metadata: {
-      rag: res.data.context_info,
-      processing_time: res.meta?.processing_time_ms,
-      id: res.meta?.request_id,
-    },
-    timestamp: new Date(),
-  };
+      if (res?.status === "SUCCESS" && res?.data?.response) {
+        const assistantMessage: Message = {
+          role: "assistant",
+          content: res.data.response,
+          confidence: res.confidence,
+          metadata: {
+            rag: res.data.context_info,
+            processing_time: res.meta?.processing_time_ms,
+            id: res.meta?.request_id,
+          },
+          timestamp: new Date(),
+        };
 
-  setMessages((prev) => [...prev, assistantMessage]);
-} else {
-  const errorText =
-    res?.errors?.[0] ||
-    "The server returned an unexpected response.";
+        setMessages((prev) => [...prev, assistantMessage]);
+      } else {
+        // Handle structured error responses that didn't throw (if any)
+        const errorText =
+          res?.errors?.join(", ") ||
+          res?.message ||
+          "The server returned an unexpected response.";
 
-  setMessages((prev) => [
-    ...prev,
-    { role: "assistant", content: errorText, timestamp: new Date() },
-  ]);
-}
-
-    } catch (error) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: errorText, timestamp: new Date() },
+        ]);
+      }
+    } catch (error: any) {
       console.error("Chat Error:", error);
       const errorMessage: Message = {
         role: "assistant",
         content:
+          error.message ||
           "I apologize, but I encountered a disruption in my neural connection. Please check your network and try again.",
         timestamp: new Date(),
       };
@@ -151,8 +151,7 @@ if (res?.status === "SUCCESS" && res?.data?.response) {
       {/* Messages Container */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 bg-transparent custom-scrollbar"
-      >
+        className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 bg-transparent custom-scrollbar">
         {messages.map((m, i) => {
           const isUser = m.role === "user";
           return (
@@ -161,16 +160,14 @@ if (res?.status === "SUCCESS" && res?.data?.response) {
               className={cn(
                 "flex flex-col max-w-[85%] md:max-w-[75%]",
                 isUser ? "ml-auto items-end" : "mr-auto items-start",
-              )}
-            >
+              )}>
               <div
                 className={cn(
                   "px-5 py-4 text-[15px] leading-relaxed",
                   isUser
                     ? "bg-[#ef660f] text-white rounded-2xl rounded-tr-none"
                     : "bg-white/5 border border-white/10 text-white/80 rounded-2xl rounded-tl-none backdrop-blur-md",
-                )}
-              >
+                )}>
                 <div className="prose prose-invert prose-sm max-w-none">
                   {m.role === "assistant" ? (
                     <ReactMarkdown
@@ -204,13 +201,11 @@ if (res?.status === "SUCCESS" && res?.data?.response) {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#ef660f] hover:underline"
-                          >
+                            className="text-[#ef660f] hover:underline">
                             {children}
                           </a>
                         ),
-                      }}
-                    >
+                      }}>
                       {m.content}
                     </ReactMarkdown>
                   ) : (
@@ -267,8 +262,7 @@ if (res?.status === "SUCCESS" && res?.data?.response) {
               input.trim() && !isLoading
                 ? "bg-[#ef660f] text-white hover:bg-[#ef660f]/80"
                 : "bg-white/5 text-white/40 cursor-not-allowed border border-white/10",
-            )}
-          >
+            )}>
             <Send className="w-5 h-5" />
           </button>
         </div>
