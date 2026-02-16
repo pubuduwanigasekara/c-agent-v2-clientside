@@ -32,5 +32,26 @@ export async function chat(payload: ChatRequest) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+  if (!res.ok) {
+    if (res.status === 400) {
+      throw new Error(
+        "Hi there! 👋\nI’m here to help with cricket-related questions only. Thanks for your understanding, and feel free to ask anything about cricket! 🏏🙂",
+      );
+    }
+
+    let errorData;
+    try {
+      errorData = await res.json();
+    } catch (e) {
+      errorData = { message: await res.text() };
+    }
+    throw new Error(
+      errorData?.errors?.[0] ||
+        errorData?.message ||
+        `Server Error (${res.status}): ${res.statusText}`,
+    );
+  }
+
   return res.json();
 }
